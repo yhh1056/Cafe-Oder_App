@@ -18,4 +18,8 @@ public class MenuController {
     public void addMenu(Menu menu) {
         menuRepository.save(menu);
     }
+
+    public void deleteMenu(Long id) {
+        menuRepository.deleteById(id);
+    }
 }
