@@ -4,7 +4,6 @@ import domain.Menu;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.MenuRepository;
-import view.Input;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,10 +22,13 @@ class MenuControllerTest {
     }
 
     @Test
-    void 유효한_메뉴를_레퍼지토리에_추가() {
-        Menu menu = new Menu("아메리카노", 4000);
-        menuController.addMenu(menu);
+    void 유효한_메뉴를_추가_한다() {
+        Menu coffee = new Menu("아메리카노", 4000);
+        Menu latte = new Menu("라떼", 4500);
+        menuController.addMenu(coffee);
+        menuController.addMenu(latte);
 
-        assertEquals(menuRepository.getMenuName(0), "아메리카노");
+        assertEquals(menuRepository.getMenuName(1L), "아메리카노");
+        assertEquals(menuRepository.getMenuName(2L), "라떼");
     }
 }

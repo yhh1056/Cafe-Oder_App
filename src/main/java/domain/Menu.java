@@ -5,6 +5,7 @@ package domain;
  * Create by {2020/07/12}
  */
 public class Menu {
+    private static Long id = 1L;
     private String name;
     private int price;
 
@@ -15,5 +16,9 @@ public class Menu {
 
     public String getName() {
         return name;
+    }
+
+    public Long getId() {
+        return id++;
     }
 }
