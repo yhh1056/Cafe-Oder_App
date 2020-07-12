@@ -20,8 +20,15 @@ public class MenuRepository implements MenuInterface {
         menuList.put(menu.getId(), menu);
     }
 
-    //테스트코드를 위해 임시적으로 만듦
-    public String getMenuName(Long id) {
-        return menuList.get(id).getName();
+    @Override
+    public void deleteById(Long id) {
+        menuList.remove(id);
+        System.out.println(menuList.keySet());
+        System.out.println(menuList.get(2L));
+    }
+
+    //테스트를 위해 임시로 만듦
+    public Menu getMenu(Long id) {
+        return menuList.get(id);
     }
 }

@@ -25,4 +25,10 @@ public class Input {
 
         menuController.addMenu(menu);
     }
+
+    public void deleteMenu() {
+        Long id = scanner.nextLong();
+
+        menuController.deleteMenu(id);
+    }
 }

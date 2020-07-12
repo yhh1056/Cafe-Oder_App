@@ -18,9 +18,14 @@ public class CafeOder {
 
     private void startAdmin() {
         registerMenu();
+        deleteMenu();
     }
 
     private void registerMenu() {
         input.addMenuByAdmin();
+    }
+
+    private void deleteMenu() {
+        input.deleteMenu();
     }
 }

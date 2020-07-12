@@ -8,4 +8,6 @@ import domain.Menu;
  */
 public interface MenuInterface {
     void save(Menu menu);
+
+    void deleteById(Long id);
 }
