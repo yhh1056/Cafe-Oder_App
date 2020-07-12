@@ -1,4 +1,4 @@
-import view.CafeOder;
+import view.CafeOderSystem;
 
 /**
  * @author {yhh1056}
@@ -6,7 +6,7 @@ import view.CafeOder;
  */
 public class CafeOderApplication {
     public static void main(String[] args) {
-        CafeOder app = new CafeOder();
+        CafeOderSystem app = new CafeOderSystem();
         app.start();
     }
 }

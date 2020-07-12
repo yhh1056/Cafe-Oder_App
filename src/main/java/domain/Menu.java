@@ -21,4 +21,8 @@ public class Menu {
     public Long getId() {
         return id++;
     }
+
+    public int getPrice() {
+        return price;
+    }
 }
