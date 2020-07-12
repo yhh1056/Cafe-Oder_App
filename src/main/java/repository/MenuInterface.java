@@ -7,5 +7,5 @@ import domain.Menu;
  * Create by {2020/07/12}
  */
 public interface MenuInterface {
-    void addByMenuList(Menu menu);
+    void save(Menu menu);
 }

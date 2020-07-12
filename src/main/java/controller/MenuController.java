@@ -16,6 +16,6 @@ public class MenuController {
     }
 
     public void addMenu(Menu menu) {
-        menuRepository.addByMenuList(menu);
+        menuRepository.save(menu);
     }
 }

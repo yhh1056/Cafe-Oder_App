@@ -16,7 +16,7 @@ public class MenuRepository implements MenuInterface {
     }
 
     @Override
-    public void addByMenuList(Menu menu) {
+    public void save(Menu menu) {
         menuList.put(menu.getId(), menu);
     }
 
