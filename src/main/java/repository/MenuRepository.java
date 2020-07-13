@@ -3,43 +3,39 @@ package repository;
 import domain.Menu;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @author {yhh1056}
  * Create by {2020/07/12}
  */
 public class MenuRepository implements MenuInterface {
-    private HashMap<Long, Menu> menuList;
-    private ArrayList<Menu> menus;
+    private ArrayList<Menu> menuList;
 
     public MenuRepository() {
-        this.menuList = new HashMap<>();
-        this.menus = new ArrayList<>();
+        this.menuList = new ArrayList<>();
     }
 
     @Override
     public void save(Menu menu) {
-        menuList.put(menu.getId(), menu);
+
+        menuList.add(menu);
     }
 
     @Override
-    public void deleteById(Long id) {
-        menuList.remove(id);
+    public void deleteByName(String name) {
+        for (int index = 0; index < menuList.size(); index++) {
+            isEqualName(name, index);
+        }
     }
 
     @Override
     public ArrayList<Menu> findAll() {
-        for (Long key : menuList.keySet()) {
-
-            Menu menu = menuList.get(key);
-            menus.add(menu);
-        }
-        return menus;
+        return this.menuList;
     }
 
-    //테스트를 위해 임시로 만듦
-    public Menu getMenu(Long id) {
-        return menuList.get(id);
+    private void isEqualName(String name, int index) {
+        if (menuList.get(index).getName().equals(name)) {
+            menuList.remove(index);
+        }
     }
 }
