@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public interface MenuInterface {
     void save(Menu menu);
 
-    void deleteById(Long id);
+    void deleteByName(String name);
 
     ArrayList<Menu> findAll();
 }

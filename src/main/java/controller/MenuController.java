@@ -21,8 +21,8 @@ public class MenuController {
         menuRepository.save(menu);
     }
 
-    public void deleteMenu(Long id) {
-        menuRepository.deleteById(id);
+    public void deleteMenu(String name) {
+        menuRepository.deleteByName(name);
     }
 
     public ArrayList<Menu> showMenuList() {

@@ -30,8 +30,8 @@ class MenuControllerTest {
         menuController.addMenu(coffee);
         menuController.addMenu(latte);
 
-        assertEquals(menuRepository.getMenu(1L).getName(), "아메리카노");
-        assertEquals(menuRepository.getMenu(2L).getName(), "라떼");
+        assertEquals(menuRepository.findAll().get(0).getName(), "아메리카노");
+        assertEquals(menuRepository.findAll().get(0).getName(), "라떼");
     }
 
     @Test
@@ -41,9 +41,9 @@ class MenuControllerTest {
         menuController.addMenu(coffee);
         menuController.addMenu(latte);
 
-        menuRepository.deleteById(2L);
+        menuRepository.deleteByName("아");
 
-        assertThat(menuRepository.getMenu(2L)).isNull();
+        assertThat(menuRepository.findAll().size()).isEqualTo(2);
     }
 
     @Test
@@ -58,6 +58,5 @@ class MenuControllerTest {
         assertThat(menuList).size().isEqualTo(2);
         assertThat(menuList.get(0).getName()).isEqualTo("아메리카노");
         assertThat(menuList.get(0).getName()).isEqualTo("아메리카노");
-
     }
 }
