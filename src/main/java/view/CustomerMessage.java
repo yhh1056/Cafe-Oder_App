@@ -16,6 +16,10 @@ public class CustomerMessage {
         System.out.println("3. 매출을 확인 합니다.");
     }
 
+//    public static void ADMIN_MENU_REGISTER_MESSAGE() {
+//        System.out.println("등록할 메뉴 이름과 가격을 입력해주세요. (엔터 기준)");
+//        System.out.println("이름은 15글자 이하로 가격은 100원 이상 100,000원 이하입니다.");
+//    }
     public static void USER_SHOW_MENU_LIST_MESSAGE() {
         System.out.println("메뉴판 입니다.");
     }

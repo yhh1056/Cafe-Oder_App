@@ -3,6 +3,9 @@ package view;
 import controller.MenuController;
 import domain.Menu;
 import repository.MenuRepository;
+import utils.MenuNameIndexOutOfBoundsException;
+import utils.MenuPriceIndexOutOfBoundsException;
+import utils.Validator;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,20 +17,25 @@ import java.util.Scanner;
 public class Customer {
     private MenuController menuController;
     private Scanner scanner;
+    private Validator validator;
 
     public Customer() {
         this.menuController = new MenuController(new MenuRepository());
         scanner = new Scanner(System.in);
+        validator = new Validator();
     }
 
     public int choiceNumber() {
         return scanner.nextInt();
     }
 
-    public void addMenuByAdmin() {
+    public void addMenuByAdmin() throws MenuNameIndexOutOfBoundsException, MenuPriceIndexOutOfBoundsException {
         String name = scanner.next();
         int price = scanner.nextInt();
         Menu menu = new Menu(name, price);
+
+        validator.nameValid(name);
+        validator.priceValid(price);
 
         menuController.addMenu(menu);
     }

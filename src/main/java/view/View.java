@@ -1,5 +1,8 @@
 package view;
 
+import utils.MenuNameIndexOutOfBoundsException;
+import utils.MenuPriceIndexOutOfBoundsException;
+
 /**
  * @author {yhh1056}
  * Create by {2020/07/12}
@@ -62,7 +65,16 @@ public class View {
     }
 
     private void registerMenu() {
-        customer.addMenuByAdmin();
+//        CustomerMessage.ADMIN_MENU_REGISTER_MESSAGE();
+        try {
+            customer.addMenuByAdmin();
+        } catch (MenuNameIndexOutOfBoundsException e) {
+            System.out.println("오류 이유 : " + e.getMessage());
+            registerMenu();
+        } catch (MenuPriceIndexOutOfBoundsException e) {
+            System.out.println("오류 이유 : " + e.getMessage());
+            registerMenu();
+        }
     }
 
     private void deleteMenu() {
