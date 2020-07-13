@@ -41,7 +41,7 @@ class MenuControllerTest {
         menuController.addMenu(coffee);
         menuController.addMenu(latte);
 
-        menuRepository.deleteByName("아");
+        menuRepository.deleteByName("아메리카노");
 
         assertThat(menuRepository.findAll().size()).isEqualTo(2);
     }
@@ -58,5 +58,13 @@ class MenuControllerTest {
         assertThat(menuList).size().isEqualTo(2);
         assertThat(menuList.get(0).getName()).isEqualTo("아메리카노");
         assertThat(menuList.get(0).getName()).isEqualTo("아메리카노");
+    }
+
+    @Test
+    void 주문() {
+        Menu coffee = new Menu("아메리카노", 4000);
+        Menu latte = new Menu("라떼", 4500);
+        menuController.addMenu(coffee);
+        menuController.addMenu(latte);
     }
 }

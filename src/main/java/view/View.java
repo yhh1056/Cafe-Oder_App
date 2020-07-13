@@ -50,11 +50,11 @@ public class View {
     }
 
     private void startUser() {
-        CustomerMessage.USER_SHOW_MENU_LIST_MESSAGE();
         showMenuList();
         /**
          * 메뉴가 없을 경우 예외 처리
          */
+        order();
     }
 
     private void registerMenu() {
@@ -66,6 +66,12 @@ public class View {
     }
 
     private void showMenuList() {
+        CustomerMessage.USER_SHOW_MENU_LIST_MESSAGE();
         customer.showMenuListByUser();
+    }
+
+    private void order() {
+        CustomerMessage.USER_CHOICE_MENU_MESSAGE();
+        customer.orderMenuByUser();
     }
 }

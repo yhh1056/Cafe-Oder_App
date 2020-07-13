@@ -14,4 +14,6 @@ public interface MenuInterface {
     void deleteByName(String name);
 
     ArrayList<Menu> findAll();
+
+    void oderByName(String name);
 }

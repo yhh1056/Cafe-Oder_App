@@ -28,4 +28,8 @@ public class MenuController {
     public ArrayList<Menu> showMenuList() {
         return menuRepository.findAll();
     }
+
+    public void oderMenu(String name) {
+        menuRepository.oderByName(name);
+    }
 }
