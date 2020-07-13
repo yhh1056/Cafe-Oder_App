@@ -4,6 +4,7 @@ import controller.MenuController;
 import domain.Menu;
 import repository.MenuRepository;
 import utils.MenuNameIndexOutOfBoundsException;
+import utils.MenuNameOverlapException;
 import utils.MenuPriceIndexOutOfBoundsException;
 import utils.Validator;
 
@@ -29,12 +30,13 @@ public class Customer {
         return scanner.nextInt();
     }
 
-    public void addMenuByAdmin() throws MenuNameIndexOutOfBoundsException, MenuPriceIndexOutOfBoundsException {
+    public void addMenuByAdmin() throws MenuNameIndexOutOfBoundsException,
+            MenuPriceIndexOutOfBoundsException, MenuNameOverlapException {
         String name = scanner.next();
         int price = scanner.nextInt();
         Menu menu = new Menu(name, price);
 
-        validator.nameValid(name);
+        validator.nameValid(name, menuController.getNames());
         validator.priceValid(price);
 
         menuController.addMenu(menu);
