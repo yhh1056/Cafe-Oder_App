@@ -3,6 +3,7 @@ package view;
 import controller.MenuController;
 import domain.Menu;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -30,5 +31,13 @@ public class Input {
         Long id = scanner.nextLong();
 
         menuController.deleteMenu(id);
+    }
+
+    public void showMenuList() {
+        ArrayList<Menu> menuList = menuController.showMenuList();
+
+        for (Menu menu : menuList) {
+            System.out.println("메뉴 : " + menu.getName() + " 가격 : " + menu.getPrice());
+        }
     }
 }

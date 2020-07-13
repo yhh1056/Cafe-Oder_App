@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.MenuRepository;
 
+import java.util.ArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -43,5 +44,20 @@ class MenuControllerTest {
         menuRepository.deleteById(2L);
 
         assertThat(menuRepository.getMenu(2L)).isNull();
+    }
+
+    @Test
+    void 메뉴_전체_조회() {
+        Menu coffee = new Menu("아메리카노", 4000);
+        Menu latte = new Menu("라떼", 4500);
+        menuController.addMenu(coffee);
+        menuController.addMenu(latte);
+
+        ArrayList<Menu> menuList =  menuController.showMenuList();
+
+        assertThat(menuList).size().isEqualTo(2);
+        assertThat(menuList.get(0).getName()).isEqualTo("아메리카노");
+        assertThat(menuList.get(0).getName()).isEqualTo("아메리카노");
+
     }
 }

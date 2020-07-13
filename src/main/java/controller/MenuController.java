@@ -3,6 +3,8 @@ package controller;
 import domain.Menu;
 import repository.MenuRepository;
 
+import java.util.ArrayList;
+
 /**
  * @author {yhh1056}
  * Create by {2020/07/12}
@@ -21,5 +23,9 @@ public class MenuController {
 
     public void deleteMenu(Long id) {
         menuRepository.deleteById(id);
+    }
+
+    public ArrayList<Menu> showMenuList() {
+        return menuRepository.findAll();
     }
 }
