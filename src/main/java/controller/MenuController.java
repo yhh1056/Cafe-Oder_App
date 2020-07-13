@@ -32,4 +32,8 @@ public class MenuController {
     public void oderMenu(String name) {
         menuRepository.oderByName(name);
     }
+
+    public int getSales() {
+        return menuRepository.getSales();
+    }
 }

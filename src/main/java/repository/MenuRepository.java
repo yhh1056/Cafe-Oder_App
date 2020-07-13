@@ -41,7 +41,11 @@ public class MenuRepository implements MenuInterface {
                 sales += menuList.get(i).getPrice();
             }
         }
-        System.out.println(sales);
+    }
+
+    @Override
+    public int getSales() {
+        return sales;
     }
 
     private void isEqualName(String name, int index) {

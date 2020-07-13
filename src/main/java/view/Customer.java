@@ -38,6 +38,11 @@ public class Customer {
         menuController.deleteMenu(menuName);
     }
 
+    public void showSalesByAdmin() {
+        int sales = menuController.getSales();
+        System.out.println("현재 매출은 " + sales + "원 입니다");
+    }
+
     public void showMenuListByUser() {
         ArrayList<Menu> menuList = menuController.showMenuList();
 

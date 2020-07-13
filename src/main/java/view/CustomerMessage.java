@@ -11,8 +11,9 @@ public class CustomerMessage {
     }
 
     public static void ADMIN_CHOICE_FUNCTION_MESSAGE() {
-        System.out.println("1. 메뉴를 등록합니다.");
-        System.out.println("2. 메뉴를 삭제합니다.");
+        System.out.println("1. 메뉴를 등록 합니다.");
+        System.out.println("2. 메뉴를 삭제 합니다.");
+        System.out.println("3. 매출을 확인 합니다.");
     }
 
     public static void USER_SHOW_MENU_LIST_MESSAGE() {
