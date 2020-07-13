@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class MenuRepository implements MenuInterface {
     private ArrayList<Menu> menuList;
+    private int sales = 0;
 
     public MenuRepository() {
         this.menuList = new ArrayList<>();
@@ -31,6 +32,16 @@ public class MenuRepository implements MenuInterface {
     @Override
     public ArrayList<Menu> findAll() {
         return this.menuList;
+    }
+
+    @Override
+    public void oderByName(String name) {
+        for (int i = 0; i < menuList.size(); i++) {
+            if (menuList.get(i).getName().equals(name)) {
+                sales += menuList.get(i).getPrice();
+            }
+        }
+        System.out.println(sales);
     }
 
     private void isEqualName(String name, int index) {

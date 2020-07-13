@@ -33,7 +33,7 @@ public class Customer {
     }
 
     public void deleteMenuByAdmin() {
-        String menuName = scanner.nextLine();
+        String menuName = scanner.next();
 
         menuController.deleteMenu(menuName);
     }
@@ -44,5 +44,11 @@ public class Customer {
         for (Menu menu : menuList) {
             System.out.println("메뉴 : " + menu.getName() + ", 가격 : " + menu.getPrice());
         }
+    }
+
+    public void orderMenuByUser() {
+        String name = scanner.next();
+
+        menuController.oderMenu(name);
     }
 }

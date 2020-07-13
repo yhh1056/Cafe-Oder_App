@@ -18,4 +18,8 @@ public class CustomerMessage {
     public static void USER_SHOW_MENU_LIST_MESSAGE() {
         System.out.println("메뉴판 입니다.");
     }
+
+    public static void USER_CHOICE_MENU_MESSAGE() {
+        System.out.println("메뉴를 선택해 주세요.");
+    }
 }
