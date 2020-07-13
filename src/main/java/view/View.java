@@ -45,6 +45,9 @@ public class View {
             case 2:
                 deleteMenu();
                 break;
+            case 3:
+                showSales();
+                break;
         }
         choiceMode();
     }
@@ -55,6 +58,7 @@ public class View {
          * 메뉴가 없을 경우 예외 처리
          */
         order();
+        choiceMode();
     }
 
     private void registerMenu() {
@@ -73,5 +77,9 @@ public class View {
     private void order() {
         CustomerMessage.USER_CHOICE_MENU_MESSAGE();
         customer.orderMenuByUser();
+    }
+
+    private void showSales() {
+        customer.showSalesByAdmin();
     }
 }

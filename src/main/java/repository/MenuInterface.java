@@ -16,4 +16,6 @@ public interface MenuInterface {
     ArrayList<Menu> findAll();
 
     void oderByName(String name);
+
+    int getSales();
 }
