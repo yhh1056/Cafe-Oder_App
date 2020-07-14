@@ -29,6 +29,9 @@ public class View {
             case 2:
                 startUser();
                 break;
+            case 3:
+                endApp();
+                break;
             default:
                 CustomerMessage.INVALID_CHOICE_MESSAGE();
                 choiceMode();
@@ -60,6 +63,10 @@ public class View {
         showMenuList();
         order();
         choiceMode();
+    }
+
+    private void endApp() {
+        System.exit(0);
     }
 
     private void registerMenu() {

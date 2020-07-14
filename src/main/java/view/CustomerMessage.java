@@ -10,7 +10,7 @@ public class CustomerMessage {
     }
 
     public static void MODE_SETTING_MESSAGE() {
-        System.out.println( "1: 관리자 모드, 2: 사용자 모드를 입력해주세요.");
+        System.out.println( "1: 관리자 모드, 2: 사용자 모드, 3: 어플 종료");
     }
 
     public static void SUCCESS_MESSAGE() {
