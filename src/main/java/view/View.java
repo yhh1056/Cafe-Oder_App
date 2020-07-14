@@ -2,6 +2,7 @@ package view;
 
 import utils.MenuNameIndexOutOfBoundsException;
 import utils.MenuNameOverlapException;
+import utils.MenuNotFoundException;
 import utils.MenuPriceIndexOutOfBoundsException;
 
 /**
@@ -60,9 +61,6 @@ public class View {
 
     private void startUser() {
         showMenuList();
-        /**
-         * 메뉴가 없을 경우 예외 처리
-         */
         order();
         choiceMode();
     }
@@ -85,7 +83,12 @@ public class View {
 
     private void showMenuList() {
         CustomerMessage.USER_SHOW_MENU_LIST_MESSAGE();
-        customer.showMenuListByUser();
+        try {
+            customer.showMenuListByUser();
+        } catch (MenuNotFoundException e) {
+            System.out.println(e.getMessage());
+            choiceMode();
+        }
     }
 
     private void order() {

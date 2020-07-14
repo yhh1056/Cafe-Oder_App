@@ -1,5 +1,7 @@
 package utils;
 
+import domain.Menu;
+
 import java.util.ArrayList;
 
 /**
@@ -17,9 +19,15 @@ public class Validator {
         return true;
     }
 
-    public boolean priceValid(int price) throws MenuPriceIndexOutOfBoundsException {
-        isPriceValid(price);
+    public boolean priceInvalid(int price) throws MenuPriceIndexOutOfBoundsException {
+        isPriceInvalid(price);
         return true;
+    }
+
+    public void isMenuInvalid(ArrayList<Menu> menus) throws MenuNotFoundException {
+        if (menus.isEmpty()) {
+            throw new MenuNotFoundException("메뉴가 없습니다. 준비 후 다시 찾아뵙겠습니다.");
+        }
     }
 
     private void isNameOverlap(String name, ArrayList<String> names) throws MenuNameOverlapException {
@@ -36,7 +44,7 @@ public class Validator {
         }
     }
 
-    private void isPriceValid(int price) throws MenuPriceIndexOutOfBoundsException {
+    private void isPriceInvalid(int price) throws MenuPriceIndexOutOfBoundsException {
         if (price < minPriceValid && price > maxPriceValid) {
             throw new MenuPriceIndexOutOfBoundsException("가격은 100원 이샹 100,000원 이하 입니다");
         }

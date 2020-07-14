@@ -3,10 +3,7 @@ package view;
 import controller.MenuController;
 import domain.Menu;
 import repository.MenuRepository;
-import utils.MenuNameIndexOutOfBoundsException;
-import utils.MenuNameOverlapException;
-import utils.MenuPriceIndexOutOfBoundsException;
-import utils.Validator;
+import utils.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -37,7 +34,7 @@ public class Customer extends Throwable {
         Menu menu = new Menu(name, price);
 
         validator.nameValid(name, menuController.getNames());
-        validator.priceValid(price);
+        validator.priceInvalid(price);
 
         menuController.addMenu(menu);
     }
@@ -53,8 +50,9 @@ public class Customer extends Throwable {
         System.out.println("현재 매출은 " + sales + "원 입니다");
     }
 
-    public void showMenuListByUser() {
+    public void showMenuListByUser() throws MenuNotFoundException {
         ArrayList<Menu> menuList = menuController.showMenuList();
+        validator.isMenuInvalid(menuList);
 
         for (Menu menu : menuList) {
             System.out.println("메뉴 : " + menu.getName() + ", 가격 : " + menu.getPrice());
