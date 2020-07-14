@@ -45,7 +45,7 @@ public class Validator {
     }
 
     private void isPriceInvalid(int price) throws MenuPriceIndexOutOfBoundsException {
-        if (price < minPriceValid && price > maxPriceValid) {
+        if (price < minPriceValid || price > maxPriceValid) {
             throw new MenuPriceIndexOutOfBoundsException("가격은 100원 이샹 100,000원 이하 입니다");
         }
     }
