@@ -3,6 +3,7 @@ package utils;
 import domain.Menu;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 /**
  * author {yhh1056}
@@ -12,6 +13,10 @@ public class Validator {
     private final int nameValidLength = 15;
     private final int minPriceValid = 100;
     private final int maxPriceValid = 100000;
+
+    public void invalidChoiceNumber(int number) throws InputMismatchException {
+        throw new InputMismatchException("잘못된 접근 방법입니다.");
+    }
 
     public boolean registerNameValid(String name, ArrayList<String> names) throws MenuNameIndexOutOfBoundsException, MenuNameOverlapException {
         invalidNameLength(name);

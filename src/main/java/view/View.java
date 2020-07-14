@@ -22,6 +22,7 @@ public class View {
         CustomerMessage.MODE_SETTING_MESSAGE();
         choiceNumber = customer.choiceNumber();
 
+
         switch (choiceNumber) {
             case 1:
                 startAdmin();
@@ -52,6 +53,7 @@ public class View {
             case 3:
                 showSales();
                 break;
+            //뒤로 가기
             default:
                 CustomerMessage.INVALID_CHOICE_MESSAGE();
                 startAdmin();
@@ -63,6 +65,7 @@ public class View {
         showMenuList();
         order();
         choiceMode();
+        //주문 안할시 뒤로가기
     }
 
     private void endApp() {
@@ -93,7 +96,7 @@ public class View {
             CustomerMessage.SUCCESS_MESSAGE();
         } catch (MenuNotFoundException e) {
             System.out.println(e.getMessage());
-            deleteMenu();
+            startAdmin();
         } catch (NotFoundNameException e) {
             System.out.println(e.getMessage());
             deleteMenu();

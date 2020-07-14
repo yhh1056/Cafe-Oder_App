@@ -6,6 +6,7 @@ import repository.MenuRepository;
 import utils.*;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -16,6 +17,7 @@ public class Customer {
     private MenuController menuController;
     private Scanner scanner;
     private Validator validator;
+    private int choiceNumber;
 
     public Customer() {
         this.menuController = new MenuController(new MenuRepository());
@@ -24,7 +26,16 @@ public class Customer {
     }
 
     public int choiceNumber() {
-        return scanner.nextInt();
+        while (true) {
+            try {
+                choiceNumber = scanner.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                CustomerMessage.INVALID_CHOICE_MESSAGE();
+                scanner = new Scanner(System.in);
+            }
+        }
+        return choiceNumber;
     }
 
     public void addMenuByAdmin() throws MenuNameIndexOutOfBoundsException,
@@ -43,7 +54,7 @@ public class Customer {
         ArrayList<Menu> menuList = getMenuList();
         validator.menuIsEmpty(menuList);
 
-        String name = scanner.next();
+        String name = scanner.nextLine();
         validator.notfoundName(name, menuList);
 
         menuController.deleteMenu(name);
