@@ -63,8 +63,10 @@ public class Customer {
         }
     }
 
-    public void orderMenuByUser() {
+    public void orderMenuByUser() throws notFoundNameException {
+        ArrayList<Menu> menuList = getMenuList();
         String name = scanner.next();
+        validator.notfoundName(name, menuList);
 
         menuController.oderMenu(name);
     }

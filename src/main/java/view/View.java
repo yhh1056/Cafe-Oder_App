@@ -100,7 +100,12 @@ public class View {
 
     private void order() {
         CustomerMessage.USER_CHOICE_MENU_MESSAGE();
-        customer.orderMenuByUser();
+        try {
+            customer.orderMenuByUser();
+        } catch (notFoundNameException e) {
+            System.out.println(e.getMessage());
+            startUser();
+        }
     }
 
     private void showSales() {
