@@ -31,6 +31,10 @@ public class CustomerMessage {
     public static void ADMIN_MENU_DELETE_MESSAGE() {
         System.out.println("삭제할 메뉴 이름을 입력해주세요.");
     }
+
+    public static void ADMIN_PRICE_INVALID_MESSAGE() {
+        System.out.println("가격을 다시 입력해주세요.");
+    }
     public static void USER_SHOW_MENU_LIST_MESSAGE() {
         System.out.println("메뉴판 입니다.");
     }

@@ -41,7 +41,16 @@ public class Customer {
     public void addMenuByAdmin() throws MenuNameIndexOutOfBoundsException,
             MenuPriceIndexOutOfBoundsException, MenuNameOverlapException {
         String name = scanner.next();
-        int price = scanner.nextInt();
+        int price;
+        while (true) {
+            try {
+                price = scanner.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                CustomerMessage.ADMIN_PRICE_INVALID_MESSAGE();
+                scanner = new Scanner(System.in);
+            }
+        }
         Menu menu = new Menu(name, price);
 
         validator.registerNameValid(name, menuNameList());
