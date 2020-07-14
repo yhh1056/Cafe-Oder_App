@@ -6,16 +6,18 @@ import repository.MenuRepository;
 import utils.*;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
  * author {yhh1056}
  * Create by {2020/07/13}
  */
-public class Customer extends Throwable {
+public class Customer {
     private MenuController menuController;
     private Scanner scanner;
     private Validator validator;
+    private int choiceNumber;
 
     public Customer() {
         this.menuController = new MenuController(new MenuRepository());
@@ -24,25 +26,47 @@ public class Customer extends Throwable {
     }
 
     public int choiceNumber() {
-        return scanner.nextInt();
+        while (true) {
+            try {
+                choiceNumber = scanner.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                CustomerMessage.INVALID_CHOICE_MESSAGE();
+                scanner = new Scanner(System.in);
+            }
+        }
+        return choiceNumber;
     }
 
     public void addMenuByAdmin() throws MenuNameIndexOutOfBoundsException,
             MenuPriceIndexOutOfBoundsException, MenuNameOverlapException {
         String name = scanner.next();
-        int price = scanner.nextInt();
+        int price;
+        while (true) {
+            try {
+                price = scanner.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                CustomerMessage.ADMIN_PRICE_INVALID_MESSAGE();
+                scanner = new Scanner(System.in);
+            }
+        }
         Menu menu = new Menu(name, price);
 
-        validator.nameValid(name, menuController.getNames());
-        validator.priceInvalid(price);
+        validator.registerNameValid(name, menuNameList());
+        validator.registerPriceInvalid(price);
 
         menuController.addMenu(menu);
     }
 
-    public void deleteMenuByAdmin() {
-        String menuName = scanner.next();
+    public void deleteMenuByAdmin() throws NotFoundNameException, MenuNotFoundException {
+        ArrayList<Menu> menuList = getMenuList();
+        validator.menuIsEmpty(menuList);
 
-        menuController.deleteMenu(menuName);
+        String name = scanner.nextLine();
+        validator.notfoundName(name, menuList);
+
+        menuController.deleteMenu(name);
     }
 
     public void showSalesByAdmin() {
@@ -51,17 +75,27 @@ public class Customer extends Throwable {
     }
 
     public void showMenuListByUser() throws MenuNotFoundException {
-        ArrayList<Menu> menuList = menuController.showMenuList();
-        validator.isMenuInvalid(menuList);
+        ArrayList<Menu> menuList = getMenuList();
+        validator.menuIsEmpty(menuList);
 
         for (Menu menu : menuList) {
             System.out.println("메뉴 : " + menu.getName() + ", 가격 : " + menu.getPrice());
         }
     }
 
-    public void orderMenuByUser() {
+    public void orderMenuByUser() throws NotFoundNameException {
+        ArrayList<Menu> menuList = getMenuList();
         String name = scanner.next();
+        validator.notfoundName(name, menuList);
 
         menuController.oderMenu(name);
+    }
+
+    private ArrayList<String> menuNameList() {
+        return menuController.getNames();
+    }
+
+    private ArrayList<Menu> getMenuList() {
+        return menuController.showMenuList();
     }
 }
