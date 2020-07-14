@@ -69,8 +69,11 @@ public class View {
 //        CustomerMessage.ADMIN_MENU_REGISTER_MESSAGE();
         try {
             customer.addMenuByAdmin();
-        } catch (MenuNameIndexOutOfBoundsException | MenuPriceIndexOutOfBoundsException e) {
+        } catch (MenuNameIndexOutOfBoundsException e) {
             System.out.println("오류 이유 : " + e.getMessage());
+            registerMenu();
+        } catch (MenuPriceIndexOutOfBoundsException e) {
+            System.out.println(e.getMessage());
             registerMenu();
         } catch (MenuNameOverlapException e) {
             System.out.println("오류 이유 " + e.getMessage());
