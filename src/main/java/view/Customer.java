@@ -12,7 +12,7 @@ import java.util.Scanner;
  * author {yhh1056}
  * Create by {2020/07/13}
  */
-public class Customer extends Throwable {
+public class Customer {
     private MenuController menuController;
     private Scanner scanner;
     private Validator validator;
@@ -33,16 +33,20 @@ public class Customer extends Throwable {
         int price = scanner.nextInt();
         Menu menu = new Menu(name, price);
 
-        validator.nameValid(name, menuController.getNames());
-        validator.priceInvalid(price);
+        validator.registerNameValid(name, menuNameList());
+        validator.registerPriceInvalid(price);
 
         menuController.addMenu(menu);
     }
 
-    public void deleteMenuByAdmin() {
-        String menuName = scanner.next();
+    public void deleteMenuByAdmin() throws notFoundNameException, MenuNotFoundException {
+        ArrayList<Menu> menuList = getMenuList();
+        validator.menuIsEmpty(menuList);
 
-        menuController.deleteMenu(menuName);
+        String name = scanner.next();
+        validator.notfoundName(name, menuList);
+
+        menuController.deleteMenu(name);
     }
 
     public void showSalesByAdmin() {
@@ -51,8 +55,8 @@ public class Customer extends Throwable {
     }
 
     public void showMenuListByUser() throws MenuNotFoundException {
-        ArrayList<Menu> menuList = menuController.showMenuList();
-        validator.isMenuInvalid(menuList);
+        ArrayList<Menu> menuList = getMenuList();
+        validator.menuIsEmpty(menuList);
 
         for (Menu menu : menuList) {
             System.out.println("메뉴 : " + menu.getName() + ", 가격 : " + menu.getPrice());
@@ -63,5 +67,13 @@ public class Customer extends Throwable {
         String name = scanner.next();
 
         menuController.oderMenu(name);
+    }
+
+    private ArrayList<String> menuNameList() {
+        return menuController.getNames();
+    }
+
+    private ArrayList<Menu> getMenuList() {
+        return menuController.showMenuList();
     }
 }

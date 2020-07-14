@@ -1,9 +1,6 @@
 package view;
 
-import utils.MenuNameIndexOutOfBoundsException;
-import utils.MenuNameOverlapException;
-import utils.MenuNotFoundException;
-import utils.MenuPriceIndexOutOfBoundsException;
+import utils.*;
 
 /**
  * @author {yhh1056}
@@ -81,7 +78,14 @@ public class View {
     }
 
     private void deleteMenu() {
-        customer.deleteMenuByAdmin();
+        try {
+            customer.deleteMenuByAdmin();
+        } catch (MenuNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (notFoundNameException e) {
+            System.out.println(e.getMessage());
+            deleteMenu();
+        }
     }
 
     private void showMenuList() {
