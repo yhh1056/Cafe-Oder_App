@@ -36,9 +36,9 @@ public class MenuRepository implements MenuInterface {
 
     @Override
     public void oderByName(String name) {
-        for (int i = 0; i < menuList.size(); i++) {
-            if (menuList.get(i).getName().equals(name)) {
-                sales += menuList.get(i).getPrice();
+        for (Menu menu : menuList) {
+            if (menu.getName().equals(name)) {
+                sales += menu.getPrice();
             }
         }
     }
@@ -46,6 +46,15 @@ public class MenuRepository implements MenuInterface {
     @Override
     public int getSales() {
         return sales;
+    }
+
+    @Override
+    public ArrayList<String> getNames() {
+        ArrayList<String> nameList = new ArrayList<>();
+        for (Menu menu : menuList) {
+            nameList.add(menu.getName());
+        }
+        return nameList;
     }
 
     private void isEqualName(String name, int index) {

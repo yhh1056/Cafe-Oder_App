@@ -1,5 +1,10 @@
 package view;
 
+import utils.MenuNameIndexOutOfBoundsException;
+import utils.MenuNameOverlapException;
+import utils.MenuNotFoundException;
+import utils.MenuPriceIndexOutOfBoundsException;
+
 /**
  * @author {yhh1056}
  * Create by {2020/07/12}
@@ -19,9 +24,7 @@ public class View {
     private void choiceMode() {
         CustomerMessage.MODE_SETTING_MESSAGE();
         choiceNumber = customer.choiceNumber();
-        /**
-         * 예외 처리
-         */
+
         switch (choiceNumber) {
             case 1:
                 startAdmin();
@@ -29,15 +32,16 @@ public class View {
             case 2:
                 startUser();
                 break;
+            default:
+                CustomerMessage.INVALID_CHOICE_MESSAGE();
+                choiceMode();
         }
     }
 
     private void startAdmin() {
         CustomerMessage.ADMIN_CHOICE_FUNCTION_MESSAGE();
         choiceNumber = customer.choiceNumber();
-        /**
-         * 예외 처리
-         */
+
         switch (choiceNumber) {
             case 1:
                 registerMenu();
@@ -48,21 +52,32 @@ public class View {
             case 3:
                 showSales();
                 break;
+            default:
+                CustomerMessage.INVALID_CHOICE_MESSAGE();
+                startAdmin();
         }
         choiceMode();
     }
 
     private void startUser() {
         showMenuList();
-        /**
-         * 메뉴가 없을 경우 예외 처리
-         */
         order();
         choiceMode();
     }
 
     private void registerMenu() {
-        customer.addMenuByAdmin();
+//        CustomerMessage.ADMIN_MENU_REGISTER_MESSAGE();
+        try {
+            customer.addMenuByAdmin();
+        } catch (MenuNameIndexOutOfBoundsException e) {
+            System.out.println("오류 이유 : " + e.getMessage());
+            registerMenu();
+        } catch (MenuPriceIndexOutOfBoundsException e) {
+            System.out.println(e.getMessage());
+            registerMenu();
+        } catch (MenuNameOverlapException e) {
+            System.out.println("오류 이유 " + e.getMessage());
+        }
     }
 
     private void deleteMenu() {
@@ -71,7 +86,12 @@ public class View {
 
     private void showMenuList() {
         CustomerMessage.USER_SHOW_MENU_LIST_MESSAGE();
-        customer.showMenuListByUser();
+        try {
+            customer.showMenuListByUser();
+        } catch (MenuNotFoundException e) {
+            System.out.println(e.getMessage());
+            choiceMode();
+        }
     }
 
     private void order() {

@@ -36,4 +36,8 @@ public class MenuController {
     public int getSales() {
         return menuRepository.getSales();
     }
+
+    public ArrayList<String> getNames() {
+        return menuRepository.getNames();
+    }
 }

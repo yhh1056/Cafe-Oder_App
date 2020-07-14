@@ -18,4 +18,6 @@ public interface MenuInterface {
     void oderByName(String name);
 
     int getSales();
+
+    ArrayList<String> getNames();
 }
