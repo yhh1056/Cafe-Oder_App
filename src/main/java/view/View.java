@@ -23,9 +23,7 @@ public class View {
     private void choiceMode() {
         CustomerMessage.MODE_SETTING_MESSAGE();
         choiceNumber = customer.choiceNumber();
-        /**
-         * 예외 처리
-         */
+
         switch (choiceNumber) {
             case 1:
                 startAdmin();
@@ -33,15 +31,16 @@ public class View {
             case 2:
                 startUser();
                 break;
+            default:
+                CustomerMessage.INVALID_CHOICE_MESSAGE();
+                choiceMode();
         }
     }
 
     private void startAdmin() {
         CustomerMessage.ADMIN_CHOICE_FUNCTION_MESSAGE();
         choiceNumber = customer.choiceNumber();
-        /**
-         * 예외 처리
-         */
+
         switch (choiceNumber) {
             case 1:
                 registerMenu();
@@ -52,6 +51,9 @@ public class View {
             case 3:
                 showSales();
                 break;
+            default:
+                CustomerMessage.INVALID_CHOICE_MESSAGE();
+                startAdmin();
         }
         choiceMode();
     }

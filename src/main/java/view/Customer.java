@@ -15,7 +15,7 @@ import java.util.Scanner;
  * author {yhh1056}
  * Create by {2020/07/13}
  */
-public class Customer {
+public class Customer extends Throwable {
     private MenuController menuController;
     private Scanner scanner;
     private Validator validator;

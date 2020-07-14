@@ -7,9 +7,9 @@ import java.util.ArrayList;
  * Create by {2020/07/14}
  */
 public class Validator {
-    int nameValidLength = 15;
-    int minPriceValid = 100;
-    int maxPriceValid = 100000;
+    private final int nameValidLength = 15;
+    private final int minPriceValid = 100;
+    private final int maxPriceValid = 100000;
 
     public boolean nameValid(String name, ArrayList<String> names) throws MenuNameIndexOutOfBoundsException, MenuNameOverlapException {
         isNameLength(name);

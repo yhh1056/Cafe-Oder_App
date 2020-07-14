@@ -5,6 +5,9 @@ package view;
  * Create by {2020/07/13}
  */
 public class CustomerMessage {
+    public static void INVALID_CHOICE_MESSAGE() {
+        System.out.println("유효하지 않은 선택 입니다. 다시 선택해 주세요.");
+    }
 
     public static void MODE_SETTING_MESSAGE() {
         System.out.println( "1: 관리자 모드, 2: 사용자 모드를 입력해주세요.");
