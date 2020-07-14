@@ -63,9 +63,10 @@ public class View {
     }
 
     private void registerMenu() {
-//        CustomerMessage.ADMIN_MENU_REGISTER_MESSAGE();
+        CustomerMessage.ADMIN_MENU_REGISTER_MESSAGE();
         try {
             customer.addMenuByAdmin();
+            CustomerMessage.SUCCESS_MESSAGE();
         } catch (MenuNameIndexOutOfBoundsException e) {
             System.out.println("오류 이유 : " + e.getMessage());
             registerMenu();
@@ -74,15 +75,19 @@ public class View {
             registerMenu();
         } catch (MenuNameOverlapException e) {
             System.out.println("오류 이유 " + e.getMessage());
+            registerMenu();
         }
     }
 
     private void deleteMenu() {
+        CustomerMessage.ADMIN_MENU_DELETE_MESSAGE();
         try {
             customer.deleteMenuByAdmin();
+            CustomerMessage.SUCCESS_MESSAGE();
         } catch (MenuNotFoundException e) {
             System.out.println(e.getMessage());
-        } catch (notFoundNameException e) {
+            deleteMenu();
+        } catch (NotFoundNameException e) {
             System.out.println(e.getMessage());
             deleteMenu();
         }
@@ -102,7 +107,7 @@ public class View {
         CustomerMessage.USER_CHOICE_MENU_MESSAGE();
         try {
             customer.orderMenuByUser();
-        } catch (notFoundNameException e) {
+        } catch (NotFoundNameException e) {
             System.out.println(e.getMessage());
             startUser();
         }

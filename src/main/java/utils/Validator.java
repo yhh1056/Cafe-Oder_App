@@ -30,10 +30,10 @@ public class Validator {
         }
     }
 
-    public void notfoundName(String name, ArrayList<Menu> menuList) throws notFoundNameException {
+    public void notfoundName(String name, ArrayList<Menu> menuList) throws NotFoundNameException {
         for (Menu menu : menuList) {
             if (!menu.getName().equals(name)) {
-                throw new notFoundNameException("해당 메뉴가 존재하지 않습니다.");
+                throw new NotFoundNameException("해당 메뉴가 존재하지 않습니다.");
             }
         }
     }

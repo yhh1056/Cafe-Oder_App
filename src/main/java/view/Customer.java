@@ -39,7 +39,7 @@ public class Customer {
         menuController.addMenu(menu);
     }
 
-    public void deleteMenuByAdmin() throws notFoundNameException, MenuNotFoundException {
+    public void deleteMenuByAdmin() throws NotFoundNameException, MenuNotFoundException {
         ArrayList<Menu> menuList = getMenuList();
         validator.menuIsEmpty(menuList);
 
@@ -63,7 +63,7 @@ public class Customer {
         }
     }
 
-    public void orderMenuByUser() throws notFoundNameException {
+    public void orderMenuByUser() throws NotFoundNameException {
         ArrayList<Menu> menuList = getMenuList();
         String name = scanner.next();
         validator.notfoundName(name, menuList);
