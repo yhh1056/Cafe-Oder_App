@@ -34,7 +34,7 @@ public class CustomerController {
                 choiceNumber = intScanner.nextInt();
                 break;
             } catch (InputMismatchException e) {
-                CustomerMessage.INVALID_CHOICE_MESSAGE();
+                CustomerMessage.invalidChoiceMessage();
                 intScanner = new Scanner(System.in);
             }
         }
@@ -51,7 +51,7 @@ public class CustomerController {
                 price = intScanner.nextInt();
                 break;
             } catch (InputMismatchException e) {
-                CustomerMessage.ADMIN_PRICE_INVALID_MESSAGE();
+                CustomerMessage.adminInvalidPriceMessage();
                 stringScanner = new Scanner(System.in);
             }
         }

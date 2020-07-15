@@ -20,7 +20,7 @@ public class View {
     }
 
     private void choiceMode() {
-        CustomerMessage.MODE_SETTING_MESSAGE();
+        CustomerMessage.modeListMessage();
         choiceNumber = customer.choiceNumber();
 
         switch (choiceNumber) {
@@ -34,13 +34,13 @@ public class View {
                 endApp();
                 break;
             default:
-                CustomerMessage.INVALID_CHOICE_MESSAGE();
+                CustomerMessage.invalidChoiceMessage();
                 choiceMode();
         }
     }
 
     private void startAdmin() {
-        CustomerMessage.ADMIN_CHOICE_FUNCTION_MESSAGE();
+        CustomerMessage.adminChoiceListMessage();
         choiceNumber = customer.choiceNumber();
 
         switch (choiceNumber) {
@@ -57,13 +57,13 @@ public class View {
                 choiceMode();
                 break;
             default:
-                CustomerMessage.INVALID_CHOICE_MESSAGE();
+                CustomerMessage.invalidChoiceMessage();
                 startAdmin();
         }
     }
 
     private void startUser() {
-        CustomerMessage.USER_CHOICE_LIST();
+        CustomerMessage.userChoiceListMessage();
         choiceNumber = customer.choiceNumber();
         switch (choiceNumber) {
             case 1:
@@ -71,7 +71,7 @@ public class View {
             case 2:
                 choiceMode();
             default:
-                CustomerMessage.INVALID_CHOICE_MESSAGE();
+                CustomerMessage.invalidChoiceMessage();
                 startUser();
         }
     }
@@ -81,10 +81,10 @@ public class View {
     }
 
     private void registerMenu() {
-        CustomerMessage.ADMIN_MENU_REGISTER_MESSAGE();
+        CustomerMessage.adminRegisterMenuMessage();
         try {
             customer.addMenuByAdmin();
-            CustomerMessage.SUCCESS_MESSAGE();
+            CustomerMessage.successMessage();
             choiceMode();
         } catch (MenuNameIndexOutOfBoundsException e) {
             System.out.println("오류 이유 : " + e.getMessage());
@@ -101,10 +101,10 @@ public class View {
     }
 
     private void deleteMenu() {
-        CustomerMessage.ADMIN_MENU_DELETE_MESSAGE();
+        CustomerMessage.adminDeleteMenuMessage();
         try {
             customer.deleteMenuByAdmin();
-            CustomerMessage.SUCCESS_MESSAGE();
+            CustomerMessage.successMessage();
             choiceMode();
         } catch (MenuNotFoundException e) {
             System.out.println(e.getMessage());
@@ -116,7 +116,7 @@ public class View {
     }
 
     private void showMenuList() {
-        CustomerMessage.USER_SHOW_MENU_LIST_MESSAGE();
+        CustomerMessage.userShowMenuListMessage();
         try {
             customer.showMenuListByUser();
             order();
@@ -127,10 +127,10 @@ public class View {
     }
 
     private void order() {
-        CustomerMessage.USER_CHOICE_MENU_MESSAGE();
+        CustomerMessage.userChoiceMenuMessage();
         try {
             customer.orderMenuByUser();
-            CustomerMessage.USER_ORDER_SUCCESS_MESSAGE();
+            CustomerMessage.userOrderSuccessMessage();
         } catch (NotFoundNameException e) {
             System.out.println(e.getMessage());
             startUser();
