@@ -1,9 +1,9 @@
-package view;
+package controller;
 
-import controller.MenuController;
 import domain.Menu;
-import repository.MenuRepository;
+import repository.CustomerRepository;
 import utils.*;
+import view.CustomerMessage;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -14,15 +14,15 @@ import java.util.Scanner;
  * Create by {2020/07/13}
  *
  */
-public class Customer {
-    private MenuController menuController;
+public class CustomerController {
+    private CustomerRepository customerRepository;
     private Scanner stringScanner;
     private Scanner intScanner;
     private Validator validator;
     private int choiceNumber;
 
-    public Customer() {
-        this.menuController = new MenuController(new MenuRepository());
+    public CustomerController() {
+        customerRepository = new CustomerRepository();
         this.stringScanner = new Scanner(System.in);
         this.intScanner = new Scanner(System.in);
         this.validator = new Validator();
@@ -59,7 +59,7 @@ public class Customer {
         validator.registerNameValid(name, this.menuNameList());
         validator.registerPriceInvalid(price);
 
-        menuController.addMenu(menu);
+        customerRepository.save(menu);
     }
 
     public void deleteMenuByAdmin() throws NotFoundNameException, MenuNotFoundException {
@@ -70,11 +70,11 @@ public class Customer {
 
         validator.notfoundName(name, menuList);
 
-        menuController.deleteMenu(name);
+        customerRepository.deleteMenu(name);
     }
 
     public void showSalesByAdmin() {
-        int sales = menuController.getSales();
+        int sales = customerRepository.getSales();
         System.out.println("현재 매출은 " + sales + "원 입니다");
     }
 
@@ -94,14 +94,14 @@ public class Customer {
 
         validator.notfoundName(name, menuList);
 
-        menuController.oderMenu(name);
+        customerRepository.oderMenu(name);
     }
 
     private ArrayList<String> menuNameList() {
-        return menuController.getNames();
+        return customerRepository.getNames();
     }
 
     private ArrayList<Menu> getMenuList() {
-        return menuController.showMenuList();
+        return customerRepository.findAll();
     }
 }

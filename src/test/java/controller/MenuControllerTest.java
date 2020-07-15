@@ -3,7 +3,7 @@ package controller;
 import domain.Menu;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import repository.MenuRepository;
+import repository.CustomerRepository;
 
 import java.util.ArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,46 +14,44 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Create by {2020/07/12}
  */
 class MenuControllerTest {
-    private MenuController menuController;
-    private MenuRepository menuRepository;
+    private CustomerRepository customerRepository;
 
     @BeforeEach
     void setUp() {
-        this.menuRepository = new MenuRepository();
-        this.menuController = new MenuController(menuRepository);
+        this.customerRepository = new CustomerRepository();
     }
 
     @Test
     void 유효한_메뉴를_추가_한다() {
         Menu coffee = new Menu("아메리카노", 4000);
         Menu latte = new Menu("라떼", 4500);
-        menuController.addMenu(coffee);
-        menuController.addMenu(latte);
+        customerRepository.save(coffee);
+        customerRepository.save(latte);
 
-        assertEquals(menuRepository.findAll().get(0).getName(), "아메리카노");
-        assertEquals(menuRepository.findAll().get(1).getName(), "라떼");
+        assertEquals(customerRepository.findAll().get(0).getName(), "아메리카노");
+        assertEquals(customerRepository.findAll().get(1).getName(), "라떼");
     }
 
     @Test
     void 아이디로_메뉴를_삭제_한다() {
         Menu coffee = new Menu("아메리카노", 4000);
         Menu latte = new Menu("라떼", 4500);
-        menuController.addMenu(coffee);
-        menuController.addMenu(latte);
+        customerRepository.save(coffee);
+        customerRepository.save(latte);
 
-        menuRepository.deleteMenu("아메리카노");
+        customerRepository.deleteMenu("아메리카노");
 
-        assertThat(menuRepository.findAll().size()).isEqualTo(1);
+        assertThat(customerRepository.findAll().size()).isEqualTo(1);
     }
 
     @Test
     void 메뉴_전체_조회() {
         Menu coffee = new Menu("아메리카노", 4000);
         Menu latte = new Menu("라떼", 4500);
-        menuController.addMenu(coffee);
-        menuController.addMenu(latte);
+        customerRepository.save(coffee);
+        customerRepository.save(latte);
 
-        ArrayList<Menu> menuList =  menuController.showMenuList();
+        ArrayList<Menu> menuList =  customerRepository.findAll();
 
         assertThat(menuList).size().isEqualTo(2);
         assertThat(menuList.get(0).getName()).isEqualTo("아메리카노");
@@ -64,7 +62,7 @@ class MenuControllerTest {
     void 주문() {
         Menu coffee = new Menu("아메리카노", 4000);
         Menu latte = new Menu("라떼", 4500);
-        menuController.addMenu(coffee);
-        menuController.addMenu(latte);
+        customerRepository.save(coffee);
+        customerRepository.save(latte);
     }
 }

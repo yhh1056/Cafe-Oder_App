@@ -8,14 +8,14 @@ import java.util.ArrayList;
  * @author {yhh1056}
  * Create by {2020/07/12}
  */
-public interface MenuInterface {
-    void save(Menu menu);
-
-    void deleteMenu(String name);
-
+public interface CustomerInterface {
     ArrayList<Menu> findAll();
 
-    void oderByName(String name);
+    void save(Menu menu);
+
+    void oderMenu(String name);
+
+    void deleteMenu(String name);
 
     int getSales();
 

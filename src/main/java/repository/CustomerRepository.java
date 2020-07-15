@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
  * @author {yhh1056}
  * Create by {2020/07/12}
  */
-public class MenuRepository implements MenuInterface {
+public class CustomerRepository implements CustomerInterface {
     private ArrayList<Menu> menuList;
     private int sales = 0;
 
-    public MenuRepository() {
+    public CustomerRepository() {
         this.menuList = new ArrayList<>();
     }
 
@@ -28,7 +28,7 @@ public class MenuRepository implements MenuInterface {
     }
 
     @Override
-    public void oderByName(String name) {
+    public void oderMenu(String name) {
         for (Menu menu : this.menuList) {
             if (name.equals(menu.getName())) {
                 this.sales += menu.getPrice();

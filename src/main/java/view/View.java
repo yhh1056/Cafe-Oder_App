@@ -1,5 +1,6 @@
 package view;
 
+import controller.CustomerController;
 import utils.*;
 
 /**
@@ -7,11 +8,11 @@ import utils.*;
  * Create by {2020/07/12}
  */
 public class View {
-    private Customer customer;
+    private CustomerController customer;
     private int choiceNumber;
 
     public View() {
-        customer = new Customer();
+        customer = new CustomerController();
     }
 
     public void start() {
