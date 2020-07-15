@@ -22,7 +22,7 @@ public class MenuController {
     }
 
     public void deleteMenu(String name) {
-        menuRepository.deleteByName(name);
+        menuRepository.deleteMenu(name);
     }
 
     public ArrayList<Menu> showMenuList() {

@@ -22,7 +22,6 @@ public class View {
         CustomerMessage.MODE_SETTING_MESSAGE();
         choiceNumber = customer.choiceNumber();
 
-
         switch (choiceNumber) {
             case 1:
                 startAdmin();
@@ -53,19 +52,27 @@ public class View {
             case 3:
                 showSales();
                 break;
-            //뒤로 가기
+            case 4:
+                choiceMode();
+                break;
             default:
                 CustomerMessage.INVALID_CHOICE_MESSAGE();
                 startAdmin();
         }
-        choiceMode();
     }
 
     private void startUser() {
-        showMenuList();
-        order();
-        choiceMode();
-        //주문 안할시 뒤로가기
+        CustomerMessage.USER_CHOICE_LIST();
+        choiceNumber = customer.choiceNumber();
+        switch (choiceNumber) {
+            case 1:
+                showMenuList();
+            case 2:
+                choiceMode();
+            default:
+                CustomerMessage.INVALID_CHOICE_MESSAGE();
+                startUser();
+        }
     }
 
     private void endApp() {
@@ -77,14 +84,17 @@ public class View {
         try {
             customer.addMenuByAdmin();
             CustomerMessage.SUCCESS_MESSAGE();
+            choiceMode();
         } catch (MenuNameIndexOutOfBoundsException e) {
             System.out.println("오류 이유 : " + e.getMessage());
-            registerMenu();
+
         } catch (MenuPriceIndexOutOfBoundsException e) {
-            System.out.println(e.getMessage());
-            registerMenu();
+            System.out.println("오류 이유 : " + e.getMessage());
+
         } catch (MenuNameOverlapException e) {
             System.out.println("오류 이유 " + e.getMessage());
+
+        } finally {
             registerMenu();
         }
     }
@@ -94,6 +104,7 @@ public class View {
         try {
             customer.deleteMenuByAdmin();
             CustomerMessage.SUCCESS_MESSAGE();
+            choiceMode();
         } catch (MenuNotFoundException e) {
             System.out.println(e.getMessage());
             startAdmin();
@@ -107,9 +118,10 @@ public class View {
         CustomerMessage.USER_SHOW_MENU_LIST_MESSAGE();
         try {
             customer.showMenuListByUser();
+            order();
+
         } catch (MenuNotFoundException e) {
             System.out.println(e.getMessage());
-            choiceMode();
         }
     }
 
@@ -117,6 +129,7 @@ public class View {
         CustomerMessage.USER_CHOICE_MENU_MESSAGE();
         try {
             customer.orderMenuByUser();
+            CustomerMessage.USER_ORDER_SUCCESS_MESSAGE();
         } catch (NotFoundNameException e) {
             System.out.println(e.getMessage());
             startUser();
@@ -125,5 +138,6 @@ public class View {
 
     private void showSales() {
         customer.showSalesByAdmin();
+        choiceMode();
     }
 }

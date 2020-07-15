@@ -31,7 +31,7 @@ class MenuControllerTest {
         menuController.addMenu(latte);
 
         assertEquals(menuRepository.findAll().get(0).getName(), "아메리카노");
-        assertEquals(menuRepository.findAll().get(0).getName(), "라떼");
+        assertEquals(menuRepository.findAll().get(1).getName(), "라떼");
     }
 
     @Test
@@ -41,9 +41,9 @@ class MenuControllerTest {
         menuController.addMenu(coffee);
         menuController.addMenu(latte);
 
-        menuRepository.deleteByName("아메리카노");
+        menuRepository.deleteMenu("아메리카노");
 
-        assertThat(menuRepository.findAll().size()).isEqualTo(2);
+        assertThat(menuRepository.findAll().size()).isEqualTo(1);
     }
 
     @Test

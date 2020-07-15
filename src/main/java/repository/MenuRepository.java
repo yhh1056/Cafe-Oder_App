@@ -3,6 +3,7 @@ package repository;
 import domain.Menu;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * @author {yhh1056}
@@ -17,49 +18,41 @@ public class MenuRepository implements MenuInterface {
     }
 
     @Override
-    public void save(Menu menu) {
-
-        menuList.add(menu);
-    }
-
-    @Override
-    public void deleteByName(String name) {
-        for (int index = 0; index < menuList.size(); index++) {
-            isEqualName(name, index);
-        }
-    }
-
-    @Override
     public ArrayList<Menu> findAll() {
         return this.menuList;
     }
 
     @Override
+    public void save(Menu menu) {
+        this.menuList.add(menu);
+    }
+
+    @Override
     public void oderByName(String name) {
-        for (Menu menu : menuList) {
-            if (menu.getName().equals(name)) {
-                sales += menu.getPrice();
+        for (Menu menu : this.menuList) {
+            if (name.equals(menu.getName())) {
+                this.sales += menu.getPrice();
+            }
+        }
+    }
+
+    @Override
+    public void deleteMenu(String name) {
+        for (int i = 0; i < this.menuList.size(); i++) {
+            if (name.equals(menuList.get(i))) {
+                this.menuList.remove(i);
             }
         }
     }
 
     @Override
     public int getSales() {
-        return sales;
+        return this.sales;
     }
 
     @Override
     public ArrayList<String> getNames() {
-        ArrayList<String> nameList = new ArrayList<>();
-        for (Menu menu : menuList) {
-            nameList.add(menu.getName());
-        }
-        return nameList;
-    }
-
-    private void isEqualName(String name, int index) {
-        if (menuList.get(index).getName().equals(name)) {
-            menuList.remove(index);
-        }
+        return this.menuList.stream().map(Menu::getName)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }

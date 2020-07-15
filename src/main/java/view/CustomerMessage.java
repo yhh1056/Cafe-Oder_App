@@ -21,6 +21,12 @@ public class CustomerMessage {
         System.out.println("1. 메뉴를 등록 합니다.");
         System.out.println("2. 메뉴를 삭제 합니다.");
         System.out.println("3. 매출을 확인 합니다.");
+        System.out.println("4. 뒤로 갑니다.");
+    }
+
+    public static void USER_CHOICE_LIST() {
+        System.out.println("1. 주문 합니다.");
+        System.out.println("2. 뒤로 갑니다.");
     }
 
     public static void ADMIN_MENU_REGISTER_MESSAGE() {
@@ -35,8 +41,12 @@ public class CustomerMessage {
     public static void ADMIN_PRICE_INVALID_MESSAGE() {
         System.out.println("가격을 다시 입력해주세요.");
     }
+
     public static void USER_SHOW_MENU_LIST_MESSAGE() {
         System.out.println("메뉴판 입니다.");
+    }
+    public static void USER_ORDER_SUCCESS_MESSAGE() {
+        System.out.println("주문이 완료되었습니다. 맛있게 드세요.");
     }
 
     public static void USER_CHOICE_MENU_MESSAGE() {
