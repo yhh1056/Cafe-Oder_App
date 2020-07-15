@@ -5,8 +5,8 @@ package view;
  * Create by {2020/07/13}
  */
 public class CustomerMessage {
-    public static void showInvalidChoice() {
-        System.out.println("유효하지 않은 선택 입니다. 다시 선택해 주세요.");
+    public static void showInvalid() {
+        System.out.println("유효하지 않은 입력입니다. 올바른 값으로 입력해주세요.");
     }
 
     public static void showMode() {
@@ -32,10 +32,6 @@ public class CustomerMessage {
     public static void showMenuRegister() {
         System.out.println("등록할 메뉴 이름과 가격을 입력해주세요. (엔터 기준)");
         System.out.println("이름은 15글자 이하로 가격은 100원 이상 100,000원 이하입니다.");
-    }
-
-    public static void showInvalidPrice() {
-        System.out.println("가격을 다시 입력해주세요.");
     }
 
     public static void showDeleteMenu() {
