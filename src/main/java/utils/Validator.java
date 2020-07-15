@@ -14,13 +14,27 @@ public class Validator {
     private final int minPriceValid = 100;
     private final int maxPriceValid = 100000;
 
-    public void registerNameValid(String name, ArrayList<String> names) throws MenuNameIndexOutOfBoundsException, MenuNameOverlapException {
-        invalidNameLength(name);
-        NameIsExisted(name, names);
+    public void invalidNameLength(String name) throws MenuNameIndexOutOfBoundsException {
+        if (name.length() > nameValidLength) {
+            throw new MenuNameIndexOutOfBoundsException("이름은 15글자를 넘길 수 없습니다.");
+        }
+    }
+
+    public void registerNameValid(String name) throws MenuNameIndexOutOfBoundsException {
+//        invalidNameLength(name);
+        //등록기능ㅁ만 추가 할 것 ;
+    }
+
+    public void registerNameIsExisted(String name, ArrayList<String> names) throws MenuNameOverlapException {
+        for (String readName : names) {
+            if (name.equals(readName)) {
+                throw new MenuNameOverlapException("이미 존재하는 메뉴입니다.");
+            }
+        }
     }
 
     public void registerPriceInvalid(int price) throws MenuPriceIndexOutOfBoundsException {
-        invalidPriceRange(price);
+        isInvalidPriceRange(price);
     }
 
     public void menuIsEmpty(ArrayList<Menu> menus) throws MenuNotFoundException {
@@ -37,21 +51,7 @@ public class Validator {
         }
     }
 
-    private void NameIsExisted(String name, ArrayList<String> names) throws MenuNameOverlapException {
-        for (String readName : names) {
-            if (name.equals(readName)) {
-                throw new MenuNameOverlapException("이미 존재하는 메뉴입니다.");
-            }
-        }
-    }
-
-    private void invalidNameLength(String name) throws MenuNameIndexOutOfBoundsException {
-        if (name.length() > nameValidLength) {
-            throw new MenuNameIndexOutOfBoundsException("이름은 15글자를 넘길 수 없습니다.");
-        }
-    }
-
-    private void invalidPriceRange(int price) throws MenuPriceIndexOutOfBoundsException {
+    public void isInvalidPriceRange(int price) throws MenuPriceIndexOutOfBoundsException {
         if (price < minPriceValid || price > maxPriceValid) {
             throw new MenuPriceIndexOutOfBoundsException("가격은 100원 이샹 100,000원 이하 입니다");
         }

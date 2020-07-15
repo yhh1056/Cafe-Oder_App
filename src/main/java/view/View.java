@@ -1,6 +1,6 @@
 package view;
 
-import controller.CustomerController;
+import controller.MenuController;
 import utils.*;
 
 /**
@@ -8,12 +8,12 @@ import utils.*;
  * Create by {2020/07/12}
  */
 public class View {
-    private CustomerController customerController;
-    private Input input;
+    private MenuController menuController;
+    private InputController inputController;
 
     public View() {
-        customerController = new CustomerController();
-        input = new Input();
+        menuController = new MenuController();
+        inputController = new InputController();
     }
 
     public void start() {
@@ -23,7 +23,7 @@ public class View {
     private void choiceMode() {
         CustomerMessage.showMode();
 
-        switch (input.getChoiceNumber()) {
+        switch (inputController.getChoiceNumber()) {
             case 1:
                 startAdmin();
                 break;
@@ -34,7 +34,7 @@ public class View {
                 endApp();
                 break;
             default:
-                CustomerMessage.showInvalidChoice();
+                CustomerMessage.showInvalid();
                 choiceMode();
         }
     }
@@ -42,7 +42,7 @@ public class View {
     private void startAdmin() {
         CustomerMessage.showAdminChoice();
 
-        switch (input.getChoiceNumber()) {
+        switch (inputController.getChoiceNumber()) {
             case 1:
                 registerMenu();
                 break;
@@ -56,23 +56,25 @@ public class View {
                 choiceMode();
                 break;
             default:
-                CustomerMessage.showInvalidChoice();
+                CustomerMessage.showInvalid();
                 startAdmin();
         }
+        inputController.lineReset();
     }
 
     private void startUser() {
         CustomerMessage.showUserChoice();
 
-        switch (input.getChoiceNumber()) {
+        switch (inputController.getChoiceNumber()) {
             case 1:
                 showMenuList();
             case 2:
                 choiceMode();
             default:
-                CustomerMessage.showInvalidChoice();
+                CustomerMessage.showInvalid();
                 startUser();
         }
+        inputController.lineReset();
     }
 
     private void endApp() {
@@ -81,28 +83,21 @@ public class View {
 
     private void registerMenu() {
         CustomerMessage.showMenuRegister();
-        try {
-            customerController.addMenuByAdmin();
-            CustomerMessage.showSuccess();
-            choiceMode();
-        } catch (MenuNameIndexOutOfBoundsException e) {
-            System.out.println("오류 이유 : " + e.getMessage());
 
-        } catch (MenuPriceIndexOutOfBoundsException e) {
-            System.out.println("오류 이유 : " + e.getMessage());
+        inputController.lineReset();
 
-        } catch (MenuNameOverlapException e) {
-            System.out.println("오류 이유 " + e.getMessage());
+        inputController.requestNameList(menuController.getNameList());
+        String name = inputController.getName();
+        int price = inputController.getPrice();
+        menuController.addMenu(name, price);
 
-        } finally {
-            registerMenu();
-        }
+        startAdmin();
     }
 
     private void deleteMenu() {
         CustomerMessage.showDeleteMenu();
         try {
-            customerController.deleteMenuByAdmin();
+            menuController.deleteMenuByAdmin();
             CustomerMessage.showSuccess();
             choiceMode();
         } catch (MenuNotFoundException e) {
@@ -117,7 +112,7 @@ public class View {
     private void showMenuList() {
         CustomerMessage.showMenuList();
         try {
-            customerController.showMenuListByUser();
+            menuController.showMenuListByUser();
             order();
 
         } catch (MenuNotFoundException e) {
@@ -128,7 +123,7 @@ public class View {
     private void order() {
         CustomerMessage.showChoiceMenu();
         try {
-            customerController.orderMenuByUser();
+            menuController.orderMenuByUser();
             CustomerMessage.showOderSuccess();
         } catch (NotFoundNameException e) {
             System.out.println(e.getMessage());
@@ -137,7 +132,7 @@ public class View {
     }
 
     private void showSales() {
-        customerController.showSalesByAdmin();
+        menuController.showSalesByAdmin();
         choiceMode();
     }
 }

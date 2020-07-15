@@ -19,5 +19,5 @@ public interface CustomerInterface {
 
     int getSales();
 
-    ArrayList<String> getNames();
+    ArrayList<String> findNames();
 }

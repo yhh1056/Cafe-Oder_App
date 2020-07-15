@@ -3,10 +3,8 @@ package controller;
 import domain.Menu;
 import repository.CustomerRepository;
 import utils.*;
-import view.CustomerMessage;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -14,36 +12,21 @@ import java.util.Scanner;
  * Create by {2020/07/13}
  *
  */
-public class CustomerController {
+public class MenuController {
     private CustomerRepository customerRepository;
     private Scanner stringScanner;
     private Scanner intScanner;
     private Validator validator;
 
-    public CustomerController() {
+    public MenuController() {
         customerRepository = new CustomerRepository();
         this.stringScanner = new Scanner(System.in);
         this.intScanner = new Scanner(System.in);
         this.validator = new Validator();
     }
 
-    public void addMenuByAdmin() throws MenuNameIndexOutOfBoundsException,
-            MenuPriceIndexOutOfBoundsException, MenuNameOverlapException {
-        String name;
-        name = stringScanner.nextLine();
-        int price;
-        while (true) {
-            try {
-                price = intScanner.nextInt();
-                break;
-            } catch (InputMismatchException e) {
-                CustomerMessage.showInvalidPrice();
-                stringScanner = new Scanner(System.in);
-            }
-        }
+    public void addMenu(String name, int price) {
         Menu menu = new Menu(name, price);
-        validator.registerNameValid(name, this.menuNameList());
-        validator.registerPriceInvalid(price);
 
         customerRepository.save(menu);
     }
@@ -83,8 +66,8 @@ public class CustomerController {
         customerRepository.oderMenu(name);
     }
 
-    private ArrayList<String> menuNameList() {
-        return customerRepository.getNames();
+    public ArrayList<String> getNameList() {
+        return customerRepository.findNames();
     }
 
     private ArrayList<Menu> getMenuList() {

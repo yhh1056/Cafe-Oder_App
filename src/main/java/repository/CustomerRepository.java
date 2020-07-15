@@ -51,7 +51,7 @@ public class CustomerRepository implements CustomerInterface {
     }
 
     @Override
-    public ArrayList<String> getNames() {
+    public ArrayList<String> findNames() {
         return this.menuList.stream().map(Menu::getName)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
