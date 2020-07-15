@@ -8,11 +8,12 @@ import utils.*;
  * Create by {2020/07/12}
  */
 public class View {
-    private CustomerController customer;
-    private int choiceNumber;
+    private CustomerController customerController;
+    private Input input;
 
     public View() {
-        customer = new CustomerController();
+        customerController = new CustomerController();
+        input = new Input();
     }
 
     public void start() {
@@ -20,10 +21,9 @@ public class View {
     }
 
     private void choiceMode() {
-        CustomerMessage.modeListMessage();
-        choiceNumber = customer.choiceNumber();
+        CustomerMessage.showMode();
 
-        switch (choiceNumber) {
+        switch (input.getChoiceNumber()) {
             case 1:
                 startAdmin();
                 break;
@@ -34,16 +34,15 @@ public class View {
                 endApp();
                 break;
             default:
-                CustomerMessage.invalidChoiceMessage();
+                CustomerMessage.showInvalidChoice();
                 choiceMode();
         }
     }
 
     private void startAdmin() {
-        CustomerMessage.adminChoiceListMessage();
-        choiceNumber = customer.choiceNumber();
+        CustomerMessage.showAdminChoice();
 
-        switch (choiceNumber) {
+        switch (input.getChoiceNumber()) {
             case 1:
                 registerMenu();
                 break;
@@ -57,21 +56,21 @@ public class View {
                 choiceMode();
                 break;
             default:
-                CustomerMessage.invalidChoiceMessage();
+                CustomerMessage.showInvalidChoice();
                 startAdmin();
         }
     }
 
     private void startUser() {
-        CustomerMessage.userChoiceListMessage();
-        choiceNumber = customer.choiceNumber();
-        switch (choiceNumber) {
+        CustomerMessage.showUserChoice();
+
+        switch (input.getChoiceNumber()) {
             case 1:
                 showMenuList();
             case 2:
                 choiceMode();
             default:
-                CustomerMessage.invalidChoiceMessage();
+                CustomerMessage.showInvalidChoice();
                 startUser();
         }
     }
@@ -81,10 +80,10 @@ public class View {
     }
 
     private void registerMenu() {
-        CustomerMessage.adminRegisterMenuMessage();
+        CustomerMessage.showMenuRegister();
         try {
-            customer.addMenuByAdmin();
-            CustomerMessage.successMessage();
+            customerController.addMenuByAdmin();
+            CustomerMessage.showSuccess();
             choiceMode();
         } catch (MenuNameIndexOutOfBoundsException e) {
             System.out.println("오류 이유 : " + e.getMessage());
@@ -101,10 +100,10 @@ public class View {
     }
 
     private void deleteMenu() {
-        CustomerMessage.adminDeleteMenuMessage();
+        CustomerMessage.showDeleteMenu();
         try {
-            customer.deleteMenuByAdmin();
-            CustomerMessage.successMessage();
+            customerController.deleteMenuByAdmin();
+            CustomerMessage.showSuccess();
             choiceMode();
         } catch (MenuNotFoundException e) {
             System.out.println(e.getMessage());
@@ -116,9 +115,9 @@ public class View {
     }
 
     private void showMenuList() {
-        CustomerMessage.userShowMenuListMessage();
+        CustomerMessage.showMenuList();
         try {
-            customer.showMenuListByUser();
+            customerController.showMenuListByUser();
             order();
 
         } catch (MenuNotFoundException e) {
@@ -127,10 +126,10 @@ public class View {
     }
 
     private void order() {
-        CustomerMessage.userChoiceMenuMessage();
+        CustomerMessage.showChoiceMenu();
         try {
-            customer.orderMenuByUser();
-            CustomerMessage.userOrderSuccessMessage();
+            customerController.orderMenuByUser();
+            CustomerMessage.showOderSuccess();
         } catch (NotFoundNameException e) {
             System.out.println(e.getMessage());
             startUser();
@@ -138,7 +137,7 @@ public class View {
     }
 
     private void showSales() {
-        customer.showSalesByAdmin();
+        customerController.showSalesByAdmin();
         choiceMode();
     }
 }

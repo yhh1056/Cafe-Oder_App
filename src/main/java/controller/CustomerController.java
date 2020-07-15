@@ -19,26 +19,12 @@ public class CustomerController {
     private Scanner stringScanner;
     private Scanner intScanner;
     private Validator validator;
-    private int choiceNumber;
 
     public CustomerController() {
         customerRepository = new CustomerRepository();
         this.stringScanner = new Scanner(System.in);
         this.intScanner = new Scanner(System.in);
         this.validator = new Validator();
-    }
-
-    public int choiceNumber() {
-        while (true) {
-            try {
-                choiceNumber = intScanner.nextInt();
-                break;
-            } catch (InputMismatchException e) {
-                CustomerMessage.invalidChoiceMessage();
-                intScanner = new Scanner(System.in);
-            }
-        }
-        return choiceNumber;
     }
 
     public void addMenuByAdmin() throws MenuNameIndexOutOfBoundsException,
@@ -51,7 +37,7 @@ public class CustomerController {
                 price = intScanner.nextInt();
                 break;
             } catch (InputMismatchException e) {
-                CustomerMessage.adminInvalidPriceMessage();
+                CustomerMessage.showInvalidPrice();
                 stringScanner = new Scanner(System.in);
             }
         }
