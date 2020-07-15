@@ -3,7 +3,7 @@ package utils;
 import domain.Menu;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
+
 
 /**
  * author {yhh1056}
@@ -14,19 +14,13 @@ public class Validator {
     private final int minPriceValid = 100;
     private final int maxPriceValid = 100000;
 
-    public void invalidChoiceNumber(int number) throws InputMismatchException {
-        throw new InputMismatchException("잘못된 접근 방법입니다.");
-    }
-
-    public boolean registerNameValid(String name, ArrayList<String> names) throws MenuNameIndexOutOfBoundsException, MenuNameOverlapException {
+    public void registerNameValid(String name, ArrayList<String> names) throws MenuNameIndexOutOfBoundsException, MenuNameOverlapException {
         invalidNameLength(name);
         NameIsExisted(name, names);
-        return true;
     }
 
-    public boolean registerPriceInvalid(int price) throws MenuPriceIndexOutOfBoundsException {
+    public void registerPriceInvalid(int price) throws MenuPriceIndexOutOfBoundsException {
         invalidPriceRange(price);
-        return true;
     }
 
     public void menuIsEmpty(ArrayList<Menu> menus) throws MenuNotFoundException {
@@ -38,14 +32,14 @@ public class Validator {
     public void notfoundName(String name, ArrayList<Menu> menuList) throws NotFoundNameException {
         for (Menu menu : menuList) {
             if (!menu.getName().equals(name)) {
-                throw new NotFoundNameException("해당 메뉴가 존재하지 않습니다.");
+                throw new NotFoundNameException("해당 메뉴를 찾지 못 했습니다.");
             }
         }
     }
 
     private void NameIsExisted(String name, ArrayList<String> names) throws MenuNameOverlapException {
         for (String readName : names) {
-            if (readName.equals(name)) {
+            if (name.equals(readName)) {
                 throw new MenuNameOverlapException("이미 존재하는 메뉴입니다.");
             }
         }
@@ -61,5 +55,6 @@ public class Validator {
         if (price < minPriceValid || price > maxPriceValid) {
             throw new MenuPriceIndexOutOfBoundsException("가격은 100원 이샹 100,000원 이하 입니다");
         }
+//  불대수 법칙, 드모르간 법
     }
 }
