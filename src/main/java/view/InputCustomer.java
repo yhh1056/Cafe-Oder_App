@@ -1,7 +1,6 @@
 package view;
 
 import utils.MenuNameIndexOutOfBoundsException;
-import utils.MenuNameOverlapException;
 import utils.MenuPriceIndexOutOfBoundsException;
 import utils.Validator;
 

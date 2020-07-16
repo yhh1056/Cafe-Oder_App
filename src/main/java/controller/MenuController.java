@@ -1,7 +1,7 @@
 package controller;
 
 import domain.Menu;
-import repository.CustomerRepository;
+import repository.MenuRepository;
 import utils.*;
 
 import java.util.ArrayList;
@@ -12,12 +12,12 @@ import java.util.Scanner;
  * Create by {2020/07/13}
  */
 public class MenuController {
-    private CustomerRepository customerRepository;
+    private MenuRepository menuRepository;
     private Scanner stringScanner;
     private Validator validator;
 
     public MenuController() {
-        this.customerRepository = new CustomerRepository();
+        this.menuRepository = new MenuRepository();
         this.stringScanner = new Scanner(System.in);
         this.validator = new Validator();
     }
@@ -25,23 +25,15 @@ public class MenuController {
     public void addMenu(String name, int price) {
         Menu menu = new Menu(name, price);
 
-        customerRepository.save(menu);
+        menuRepository.save(menu);
     }
 
-//    public void deleteMenuByAdmin() throws NotFoundNameException, NotFoundMenuException {
-//        ArrayList<Menu> menuList = getMenuList();
-//        validator.menuIsEmpty(menuList);
-//
-//        String name = stringScanner.nextLine();
-//
-//        validator.notfoundName(name, menuList);
-//
-//        customerRepository.deleteMenu(name);
-//    }
+    public void delete(String name) {
+        menuRepository.deleteMenu(name);
+    }
 
-    public void showSalesByAdmin() {
-        int sales = customerRepository.getSales();
-        System.out.println("현재 매출은 " + sales + "원 입니다");
+    public int getSales() {
+        return menuRepository.getSales();
     }
 
     public void showMenuListByUser() throws NotFoundMenuException {
@@ -60,19 +52,14 @@ public class MenuController {
 
         validator.notfoundName(name, menuList);
 
-        customerRepository.oderMenu(name);
+        menuRepository.oderMenu(name);
     }
 
     public ArrayList<String> getNameList() {
-        return customerRepository.findNames();
+        return menuRepository.findNames();
     }
 
     private ArrayList<Menu> getMenuList() {
-        return customerRepository.findAll();
-    }
-
-    public void delete(String name) {
-        System.out.println(name + "너의 이름은?");
-        customerRepository.deleteMenu(name);
+        return menuRepository.findAll();
     }
 }

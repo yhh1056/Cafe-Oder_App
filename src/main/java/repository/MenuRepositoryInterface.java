@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author {yhh1056}
  * Create by {2020/07/12}
  */
-public interface CustomerInterface {
+public interface MenuRepositoryInterface {
     ArrayList<Menu> findAll();
 
     void save(Menu menu);
@@ -20,6 +20,4 @@ public interface CustomerInterface {
     int getSales();
 
     ArrayList<String> findNames();
-
-    String findName(String name);
 }

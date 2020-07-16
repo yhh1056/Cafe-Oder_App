@@ -96,11 +96,10 @@ public class View {
     private void deleteMenu() {
         CustomerMessage.showDeleteMenu();
         inputCustomer.lineReset();
+        //메뉴가 없는 경우 추가
         inputCustomer.getNameList(menuController.getNameList());
         String name = inputCustomer.getEqualName();
         menuController.delete(name);
-
-        //삭제할게 없을 경우 추가
         startAdmin();
     }
 
@@ -127,7 +126,8 @@ public class View {
     }
 
     private void showSales() {
-        menuController.showSalesByAdmin();
+        int sales = menuController.getSales();
+        CustomerMessage.showSales(sales);
         choiceMode();
     }
 }

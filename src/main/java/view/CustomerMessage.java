@@ -56,4 +56,8 @@ public class CustomerMessage {
     public static void showNotFoundName() {
         System.out.println("해당 메뉴를 찾을 수 없습니다.");
     }
+
+    public static void showSales(int sales) {
+        System.out.println("현재 매출은 " + sales + "원 입니다.");
+    }
 }
