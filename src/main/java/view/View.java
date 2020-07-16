@@ -1,5 +1,6 @@
 package view;
 
+import controller.MenuController;
 import utils.*;
 
 /**
@@ -7,11 +8,12 @@ import utils.*;
  * Create by {2020/07/12}
  */
 public class View {
-    private Customer customer;
-    private int choiceNumber;
+    private InputCustomer inputCustomer;
+    private MenuController menuController;
 
     public View() {
-        customer = new Customer();
+        inputCustomer = new InputCustomer();
+        menuController = new MenuController();
     }
 
     public void start() {
@@ -19,10 +21,9 @@ public class View {
     }
 
     private void choiceMode() {
-        CustomerMessage.MODE_SETTING_MESSAGE();
-        choiceNumber = customer.choiceNumber();
+        CustomerMessage.showMode();
 
-        switch (choiceNumber) {
+        switch (inputCustomer.getChoiceNumber()) {
             case 1:
                 startAdmin();
                 break;
@@ -33,16 +34,15 @@ public class View {
                 endApp();
                 break;
             default:
-                CustomerMessage.INVALID_CHOICE_MESSAGE();
+                CustomerMessage.showInvalid();
                 choiceMode();
         }
     }
 
     private void startAdmin() {
-        CustomerMessage.ADMIN_CHOICE_FUNCTION_MESSAGE();
-        choiceNumber = customer.choiceNumber();
+        CustomerMessage.showAdminChoice();
 
-        switch (choiceNumber) {
+        switch (inputCustomer.getChoiceNumber()) {
             case 1:
                 registerMenu();
                 break;
@@ -56,23 +56,25 @@ public class View {
                 choiceMode();
                 break;
             default:
-                CustomerMessage.INVALID_CHOICE_MESSAGE();
+                CustomerMessage.showInvalid();
                 startAdmin();
         }
+        inputCustomer.lineReset();
     }
 
     private void startUser() {
-        CustomerMessage.USER_CHOICE_LIST();
-        choiceNumber = customer.choiceNumber();
-        switch (choiceNumber) {
+        CustomerMessage.showUserChoice();
+
+        switch (inputCustomer.getChoiceNumber()) {
             case 1:
                 showMenuList();
             case 2:
                 choiceMode();
             default:
-                CustomerMessage.INVALID_CHOICE_MESSAGE();
+                CustomerMessage.showInvalid();
                 startUser();
         }
+        inputCustomer.lineReset();
     }
 
     private void endApp() {
@@ -80,56 +82,43 @@ public class View {
     }
 
     private void registerMenu() {
-        CustomerMessage.ADMIN_MENU_REGISTER_MESSAGE();
-        try {
-            customer.addMenuByAdmin();
-            CustomerMessage.SUCCESS_MESSAGE();
-            choiceMode();
-        } catch (MenuNameIndexOutOfBoundsException e) {
-            System.out.println("오류 이유 : " + e.getMessage());
+        CustomerMessage.showMenuRegister();
+        inputCustomer.lineReset();
 
-        } catch (MenuPriceIndexOutOfBoundsException e) {
-            System.out.println("오류 이유 : " + e.getMessage());
+        inputCustomer.getNameList(menuController.getNameList());
+        String name = inputCustomer.getRegisterInputName();
+        int price = inputCustomer.getPrice();
+        menuController.addMenu(name, price);
 
-        } catch (MenuNameOverlapException e) {
-            System.out.println("오류 이유 " + e.getMessage());
-
-        } finally {
-            registerMenu();
-        }
+        startAdmin();
     }
 
     private void deleteMenu() {
-        CustomerMessage.ADMIN_MENU_DELETE_MESSAGE();
-        try {
-            customer.deleteMenuByAdmin();
-            CustomerMessage.SUCCESS_MESSAGE();
-            choiceMode();
-        } catch (MenuNotFoundException e) {
-            System.out.println(e.getMessage());
-            startAdmin();
-        } catch (NotFoundNameException e) {
-            System.out.println(e.getMessage());
-            deleteMenu();
-        }
+        CustomerMessage.showDeleteMenu();
+        inputCustomer.lineReset();
+        //메뉴가 없는 경우 추가
+        inputCustomer.getNameList(menuController.getNameList());
+        String name = inputCustomer.getEqualName();
+        menuController.delete(name);
+        startAdmin();
     }
 
     private void showMenuList() {
-        CustomerMessage.USER_SHOW_MENU_LIST_MESSAGE();
+        CustomerMessage.showMenuList();
         try {
-            customer.showMenuListByUser();
+            menuController.showMenuListByUser();
             order();
 
-        } catch (MenuNotFoundException e) {
+        } catch (NotFoundMenuException e) {
             System.out.println(e.getMessage());
         }
     }
 
     private void order() {
-        CustomerMessage.USER_CHOICE_MENU_MESSAGE();
+        CustomerMessage.showChoiceMenu();
         try {
-            customer.orderMenuByUser();
-            CustomerMessage.USER_ORDER_SUCCESS_MESSAGE();
+            menuController.orderMenuByUser();
+            CustomerMessage.showOderSuccess();
         } catch (NotFoundNameException e) {
             System.out.println(e.getMessage());
             startUser();
@@ -137,7 +126,8 @@ public class View {
     }
 
     private void showSales() {
-        customer.showSalesByAdmin();
+        int sales = menuController.getSales();
+        CustomerMessage.showSales(sales);
         choiceMode();
     }
 }
