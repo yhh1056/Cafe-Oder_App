@@ -20,4 +20,6 @@ public interface CustomerInterface {
     int getSales();
 
     ArrayList<String> findNames();
+
+    String findName(String name);
 }

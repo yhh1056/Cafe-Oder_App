@@ -25,21 +25,22 @@ public class Validator {
         //등록기능ㅁ만 추가 할 것 ;
     }
 
-    public void registerNameIsExisted(String name, ArrayList<String> names) throws MenuNameOverlapException {
+    public boolean isExistedName(String name, ArrayList<String> names) {
         for (String readName : names) {
             if (name.equals(readName)) {
-                throw new MenuNameOverlapException("이미 존재하는 메뉴입니다.");
+                return true;
             }
         }
+        return false;
     }
 
     public void registerPriceInvalid(int price) throws MenuPriceIndexOutOfBoundsException {
         isInvalidPriceRange(price);
     }
 
-    public void menuIsEmpty(ArrayList<Menu> menus) throws MenuNotFoundException {
+    public void menuIsEmpty(ArrayList<Menu> menus) throws NotFoundMenuException {
         if (menus.isEmpty()) {
-            throw new MenuNotFoundException("현재 메뉴가 존재하지 않습니다.");
+            throw new NotFoundMenuException("현재 메뉴가 존재하지 않습니다.");
         }
     }
 
@@ -56,5 +57,6 @@ public class Validator {
             throw new MenuPriceIndexOutOfBoundsException("가격은 100원 이샹 100,000원 이하 입니다");
         }
 //  불대수 법칙, 드모르간 법
+
     }
 }

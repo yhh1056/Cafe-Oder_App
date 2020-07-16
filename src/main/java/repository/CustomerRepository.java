@@ -38,9 +38,9 @@ public class CustomerRepository implements CustomerInterface {
 
     @Override
     public void deleteMenu(String name) {
-        for (int i = 0; i < this.menuList.size(); i++) {
-            if (name.equals(menuList.get(i))) {
-                this.menuList.remove(i);
+        for (int i = 0; i < menuList.size(); i++) {
+            if (name.equals(menuList.get(i).getName())) {
+                menuList.remove(i);
             }
         }
     }
@@ -54,5 +54,17 @@ public class CustomerRepository implements CustomerInterface {
     public ArrayList<String> findNames() {
         return this.menuList.stream().map(Menu::getName)
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @Override
+    public String findName(String name) {
+        String findName = null;
+        for (int i = 0; i < menuList.size(); i++) {
+            if (name.equals(menuList.get(i))) {
+                findName = menuList.get(i).getName();
+            }
+
+        }
+        return findName;
     }
 }

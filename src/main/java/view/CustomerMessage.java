@@ -48,4 +48,12 @@ public class CustomerMessage {
     public static void showOderSuccess() {
         System.out.println("주문이 완료 되었습니다. 맛있게 드세요.");
     }
+
+    public static void showIsExisted() {
+        System.out.println("이미 존재 하는 메뉴 입니다.");
+    }
+
+    public static void showNotFoundName() {
+        System.out.println("해당 메뉴를 찾을 수 없습니다.");
+    }
 }

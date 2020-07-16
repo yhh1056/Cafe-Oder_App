@@ -8,12 +8,12 @@ import utils.*;
  * Create by {2020/07/12}
  */
 public class View {
+    private InputCustomer inputCustomer;
     private MenuController menuController;
-    private InputController inputController;
 
     public View() {
+        inputCustomer = new InputCustomer();
         menuController = new MenuController();
-        inputController = new InputController();
     }
 
     public void start() {
@@ -23,7 +23,7 @@ public class View {
     private void choiceMode() {
         CustomerMessage.showMode();
 
-        switch (inputController.getChoiceNumber()) {
+        switch (inputCustomer.getChoiceNumber()) {
             case 1:
                 startAdmin();
                 break;
@@ -42,7 +42,7 @@ public class View {
     private void startAdmin() {
         CustomerMessage.showAdminChoice();
 
-        switch (inputController.getChoiceNumber()) {
+        switch (inputCustomer.getChoiceNumber()) {
             case 1:
                 registerMenu();
                 break;
@@ -59,13 +59,13 @@ public class View {
                 CustomerMessage.showInvalid();
                 startAdmin();
         }
-        inputController.lineReset();
+        inputCustomer.lineReset();
     }
 
     private void startUser() {
         CustomerMessage.showUserChoice();
 
-        switch (inputController.getChoiceNumber()) {
+        switch (inputCustomer.getChoiceNumber()) {
             case 1:
                 showMenuList();
             case 2:
@@ -74,7 +74,7 @@ public class View {
                 CustomerMessage.showInvalid();
                 startUser();
         }
-        inputController.lineReset();
+        inputCustomer.lineReset();
     }
 
     private void endApp() {
@@ -83,12 +83,11 @@ public class View {
 
     private void registerMenu() {
         CustomerMessage.showMenuRegister();
+        inputCustomer.lineReset();
 
-        inputController.lineReset();
-
-        inputController.requestNameList(menuController.getNameList());
-        String name = inputController.getName();
-        int price = inputController.getPrice();
+        inputCustomer.getNameList(menuController.getNameList());
+        String name = inputCustomer.getRegisterInputName();
+        int price = inputCustomer.getPrice();
         menuController.addMenu(name, price);
 
         startAdmin();
@@ -96,17 +95,13 @@ public class View {
 
     private void deleteMenu() {
         CustomerMessage.showDeleteMenu();
-        try {
-            menuController.deleteMenuByAdmin();
-            CustomerMessage.showSuccess();
-            choiceMode();
-        } catch (MenuNotFoundException e) {
-            System.out.println(e.getMessage());
-            startAdmin();
-        } catch (NotFoundNameException e) {
-            System.out.println(e.getMessage());
-            deleteMenu();
-        }
+        inputCustomer.lineReset();
+        inputCustomer.getNameList(menuController.getNameList());
+        String name = inputCustomer.getEqualName();
+        menuController.delete(name);
+
+        //삭제할게 없을 경우 추가
+        startAdmin();
     }
 
     private void showMenuList() {
@@ -115,7 +110,7 @@ public class View {
             menuController.showMenuListByUser();
             order();
 
-        } catch (MenuNotFoundException e) {
+        } catch (NotFoundMenuException e) {
             System.out.println(e.getMessage());
         }
     }

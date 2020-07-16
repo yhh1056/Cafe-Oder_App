@@ -13,7 +13,7 @@ import java.util.Scanner;
  * author {yhh1056}
  * Create by {2020/07/15}
  */
-public class InputController {
+public class InputCustomer {
     private Scanner scanner;
     private int number;
     private String name;
@@ -21,7 +21,7 @@ public class InputController {
     private Validator validator;
     private ArrayList<String> nameList;
 
-    public InputController() {
+    public InputCustomer() {
         scanner = new Scanner(System.in);
         this.validator = new Validator();
     }
@@ -37,15 +37,19 @@ public class InputController {
         }
     }
 
-    public String getName()  {
+    public String getRegisterInputName()  {
         try {
             name = scanner.nextLine();
             validator.invalidNameLength(name);
-            validator.registerNameIsExisted(name, nameList);
-            return name;
-        } catch (MenuNameIndexOutOfBoundsException | MenuNameOverlapException e) {
+            if (validator.isExistedName(name, nameList)) {
+                CustomerMessage.showIsExisted();
+                return getRegisterInputName();
+            } else {
+                return name;
+            }
+        } catch (MenuNameIndexOutOfBoundsException e) {
             System.out.println(e.getMessage());
-            return getName();
+            return getRegisterInputName();
         }
     }
 
@@ -69,7 +73,17 @@ public class InputController {
         scanner.nextLine();
     }
 
-    public void requestNameList(ArrayList<String> nameList) {
+    public void getNameList(ArrayList<String> nameList) {
         this.nameList = nameList;
+    }
+
+    public String getEqualName() {
+        String name = scanner.nextLine();
+        if (validator.isExistedName(name, nameList)) {
+            return name;
+        } else {
+            CustomerMessage.showNotFoundName();
+            return getEqualName();
+        }
     }
 }

@@ -10,18 +10,15 @@ import java.util.Scanner;
 /**
  * author {yhh1056}
  * Create by {2020/07/13}
- *
  */
 public class MenuController {
     private CustomerRepository customerRepository;
     private Scanner stringScanner;
-    private Scanner intScanner;
     private Validator validator;
 
     public MenuController() {
-        customerRepository = new CustomerRepository();
+        this.customerRepository = new CustomerRepository();
         this.stringScanner = new Scanner(System.in);
-        this.intScanner = new Scanner(System.in);
         this.validator = new Validator();
     }
 
@@ -31,23 +28,23 @@ public class MenuController {
         customerRepository.save(menu);
     }
 
-    public void deleteMenuByAdmin() throws NotFoundNameException, MenuNotFoundException {
-        ArrayList<Menu> menuList = getMenuList();
-        validator.menuIsEmpty(menuList);
-
-        String name = stringScanner.nextLine();
-
-        validator.notfoundName(name, menuList);
-
-        customerRepository.deleteMenu(name);
-    }
+//    public void deleteMenuByAdmin() throws NotFoundNameException, NotFoundMenuException {
+//        ArrayList<Menu> menuList = getMenuList();
+//        validator.menuIsEmpty(menuList);
+//
+//        String name = stringScanner.nextLine();
+//
+//        validator.notfoundName(name, menuList);
+//
+//        customerRepository.deleteMenu(name);
+//    }
 
     public void showSalesByAdmin() {
         int sales = customerRepository.getSales();
         System.out.println("현재 매출은 " + sales + "원 입니다");
     }
 
-    public void showMenuListByUser() throws MenuNotFoundException {
+    public void showMenuListByUser() throws NotFoundMenuException {
         ArrayList<Menu> menuList = getMenuList();
         validator.menuIsEmpty(menuList);
 
@@ -72,5 +69,10 @@ public class MenuController {
 
     private ArrayList<Menu> getMenuList() {
         return customerRepository.findAll();
+    }
+
+    public void delete(String name) {
+        System.out.println(name + "너의 이름은?");
+        customerRepository.deleteMenu(name);
     }
 }
