@@ -3,8 +3,6 @@ package repository;
 import domain.Menu;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.stream.Collectors;
 
 /**
  * @author {yhh1056}
@@ -29,21 +27,15 @@ public class MenuRepository implements MenuRepositoryInterface {
     }
 
     @Override
-    public void oderMenu(String name) {
-        for (Menu menu : this.menuList) {
-            if (name.equals(menu.getName())) {
-                this.sales += menu.getPrice();
-            }
-        }
+    public void deleteMenu(String name) {
+        menuList.removeIf(menu -> name.equals(menu.getName()));
     }
 
     @Override
-    public void deleteMenu(String name) {
-        int size = menuList.size();
-
-        for (int i = 0; i < size; i++) {
-            if (name.equals(menuList.get(i).getName())) {
-                menuList.remove(i);
+    public void oderMenu(String name) {
+        for (Menu menu : menuList) {
+            if (name.equals(menu.getName())) {
+                sales += menu.getPrice();
             }
         }
     }
@@ -51,11 +43,5 @@ public class MenuRepository implements MenuRepositoryInterface {
     @Override
     public int getSales() {
         return this.sales;
-    }
-
-    @Override
-    public ArrayList<String> findNames() {
-        return this.menuList.stream().map(Menu::getName)
-                .collect(Collectors.toCollection(ArrayList::new));
     }
 }

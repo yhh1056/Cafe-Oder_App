@@ -1,19 +1,21 @@
 package view;
 
 import controller.MenuController;
-import utils.*;
+import utils.Validator;
 
 /**
  * @author {yhh1056}
  * Create by {2020/07/12}
  */
 public class View {
-    private InputCustomer inputCustomer;
+    private Input input;
     private MenuController menuController;
+    private Validator validator;
 
     public View() {
-        inputCustomer = new InputCustomer();
-        menuController = new MenuController();
+        this.input = new Input();
+        this.menuController = new MenuController();
+        this.validator = new Validator();
     }
 
     public void start() {
@@ -21,28 +23,28 @@ public class View {
     }
 
     private void choiceMode() {
-        CustomerMessage.showMode();
+        ApplicationMessage.showMode();
 
-        switch (inputCustomer.getChoiceNumber()) {
+        switch (input.getChoiceNumber()) {
             case 1:
                 startAdmin();
                 break;
             case 2:
-                startUser();
+                startCustomer();
                 break;
             case 3:
                 endApp();
                 break;
             default:
-                CustomerMessage.showInvalid();
+                ApplicationErrorMessage.isInvalid();
                 choiceMode();
         }
     }
 
     private void startAdmin() {
-        CustomerMessage.showAdminChoice();
+        ApplicationMessage.showAdminChoice();
 
-        switch (inputCustomer.getChoiceNumber()) {
+        switch (input.getChoiceNumber()) {
             case 1:
                 registerMenu();
                 break;
@@ -56,78 +58,90 @@ public class View {
                 choiceMode();
                 break;
             default:
-                CustomerMessage.showInvalid();
+                ApplicationErrorMessage.isInvalid();
                 startAdmin();
         }
-        inputCustomer.lineReset();
     }
 
-    private void startUser() {
-        CustomerMessage.showUserChoice();
+    private void startCustomer() {
+        ApplicationMessage.showUserChoice();
 
-        switch (inputCustomer.getChoiceNumber()) {
+        switch (input.getChoiceNumber()) {
             case 1:
-                showMenuList();
+                order();
             case 2:
                 choiceMode();
             default:
-                CustomerMessage.showInvalid();
-                startUser();
+                ApplicationErrorMessage.isInvalid();
+                startCustomer();
         }
-        inputCustomer.lineReset();
+    }
+
+    private void registerMenu() {
+        ApplicationMessage.showMenuRegister();
+
+        this.getMenuListForValidation();
+
+        String name = input.getRegisterName();
+        int price = input.getRegisterPrice();
+        menuController.addMenu(name, price);
+
+        startAdmin();
+    }
+
+    private void order() {
+        this.checkEmpty();
+
+        ApplicationMessage.showOder();
+
+        String name = input.getEqualName();
+        menuController.order(name);
+
+        ApplicationMessage.showOderSuccess();
+
+        startCustomer();
+    }
+
+    private void deleteMenu() {
+        checkEmpty();
+
+        ApplicationMessage.showDeleteMenu();
+
+        String name = input.getEqualName();
+        menuController.delete(name);
+
+        ApplicationMessage.showDeleteSuccess();
+
+        startAdmin();
+    }
+
+    private void showSales() {
+        int sales = menuController.getSales();
+
+        ApplicationMessage.showSales(sales);
+
+        startAdmin();
+    }
+
+    private void showMenuList() {
+        ApplicationMessage.showMenuList(menuController.getMenuList());
     }
 
     private void endApp() {
         System.exit(0);
     }
 
-    private void registerMenu() {
-        CustomerMessage.showMenuRegister();
-        inputCustomer.lineReset();
+    private void checkEmpty() {
+        getMenuListForValidation();
 
-        inputCustomer.getNameList(menuController.getNameList());
-        String name = inputCustomer.getRegisterInputName();
-        int price = inputCustomer.getPrice();
-        menuController.addMenu(name, price);
-
-        startAdmin();
-    }
-
-    private void deleteMenu() {
-        CustomerMessage.showDeleteMenu();
-        inputCustomer.lineReset();
-        //메뉴가 없는 경우 추가
-        inputCustomer.getNameList(menuController.getNameList());
-        String name = inputCustomer.getEqualName();
-        menuController.delete(name);
-        startAdmin();
-    }
-
-    private void showMenuList() {
-        CustomerMessage.showMenuList();
-        try {
-            menuController.showMenuListByUser();
-            order();
-
-        } catch (NotFoundMenuException e) {
-            System.out.println(e.getMessage());
+        if (validator.isEmptyMenu(menuController.getMenuList())) {
+            ApplicationErrorMessage.isEmptyMenu();
+            choiceMode();
         }
+        showMenuList();
     }
 
-    private void order() {
-        CustomerMessage.showChoiceMenu();
-        try {
-            menuController.orderMenuByUser();
-            CustomerMessage.showOderSuccess();
-        } catch (NotFoundNameException e) {
-            System.out.println(e.getMessage());
-            startUser();
-        }
-    }
-
-    private void showSales() {
-        int sales = menuController.getSales();
-        CustomerMessage.showSales(sales);
-        choiceMode();
+    private void getMenuListForValidation() {
+        input.getMenuList(menuController.getMenuList());
     }
 }
