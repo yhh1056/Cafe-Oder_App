@@ -1,5 +1,6 @@
 package view;
 
+import domain.Menu;
 import utils.MenuNameIndexOutOfBoundsException;
 import utils.MenuPriceIndexOutOfBoundsException;
 import utils.Validator;
@@ -18,7 +19,7 @@ public class InputCustomer {
     private String name;
     private int price;
     private Validator validator;
-    private ArrayList<String> nameList;
+    private ArrayList<Menu> menuList;
 
     public InputCustomer() {
         scanner = new Scanner(System.in);
@@ -36,26 +37,35 @@ public class InputCustomer {
         }
     }
 
-    public String getRegisterInputName()  {
+    public String getRegisterName()  {
+        name = scanner.nextLine();
         try {
-            name = scanner.nextLine();
             validator.invalidNameLength(name);
-            if (validator.isExistedName(name, nameList)) {
-                CustomerMessage.showIsExisted();
-                return getRegisterInputName();
-            } else {
+            if (validator.isExistedMenu(name, menuList)) {
+                System.out.println("이미 존재하는 메뉴");
+                return getRegisterName();
+            } else
                 return name;
-            }
         } catch (MenuNameIndexOutOfBoundsException e) {
             System.out.println(e.getMessage());
-            return getRegisterInputName();
+            return getRegisterName();
+        }
+    }
+
+    public String getEqualName() {
+        String name = scanner.nextLine();
+        if (validator.isExistedMenu(name, menuList)) {
+            return name;
+        } else {
+            CustomerMessage.showNotFoundName();
+            return getEqualName();
         }
     }
 
     public int getPrice() {
         try {
             price = scanner.nextInt();
-            validator.isInvalidPriceRange(price);
+            validator.invalidPriceRange(price);
             return price;
         } catch (InputMismatchException e) {
             CustomerMessage.showInvalid();
@@ -72,17 +82,7 @@ public class InputCustomer {
         scanner.nextLine();
     }
 
-    public void getNameList(ArrayList<String> nameList) {
-        this.nameList = nameList;
-    }
-
-    public String getEqualName() {
-        String name = scanner.nextLine();
-        if (validator.isExistedName(name, nameList)) {
-            return name;
-        } else {
-            CustomerMessage.showNotFoundName();
-            return getEqualName();
-        }
+    public void getMenuList(ArrayList<Menu> menuList) {
+        this.menuList = menuList;
     }
 }

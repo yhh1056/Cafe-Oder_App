@@ -3,6 +3,7 @@ package utils;
 import domain.Menu;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 
 /**
@@ -20,43 +21,45 @@ public class Validator {
         }
     }
 
-    public void registerNameValid(String name) throws MenuNameIndexOutOfBoundsException {
-//        invalidNameLength(name);
-        //등록기능ㅁ만 추가 할 것 ;
+    public void invalidPriceRange(int price) throws MenuPriceIndexOutOfBoundsException {
+        if (price < minPriceValid || price > maxPriceValid) {
+            throw new MenuPriceIndexOutOfBoundsException("가격은 100원 이샹 100,000원 이하 입니다");
+        }
     }
 
-    public boolean isExistedName(String name, ArrayList<String> names) {
-        for (String readName : names) {
-            if (name.equals(readName)) {
+    public ArrayList<String> getNames(ArrayList<Menu> menuList) {
+        if (menuList.isEmpty()) {
+            throw new NullPointerException();
+        } else {
+            return menuList.stream().map(Menu::getName)
+                    .collect(Collectors.toCollection(ArrayList::new));
+        }
+    }
+    //뒷 메뉴를 조회하면 그만큼 비효율적이다.
+    public boolean isExistedMenu(String name, ArrayList<Menu> menuList) {
+        for (int i = 0; i < menuList.size(); i++) {
+            if (menuList.get(i).getName().equals(name)) {
                 return true;
             }
         }
         return false;
     }
 
-    public void registerPriceInvalid(int price) throws MenuPriceIndexOutOfBoundsException {
-        isInvalidPriceRange(price);
-    }
 
-    public void menuIsEmpty(ArrayList<Menu> menus) throws NotFoundMenuException {
+    public boolean isEmptyMenu(ArrayList<Menu> menus) {
         if (menus.isEmpty()) {
-            throw new NotFoundMenuException("현재 메뉴가 존재하지 않습니다.");
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void notfoundName(String name, ArrayList<Menu> menuList) throws NotFoundNameException {
+    public boolean isFoundName(String name, ArrayList<Menu> menuList) {
         for (Menu menu : menuList) {
-            if (!menu.getName().equals(name)) {
-                throw new NotFoundNameException("해당 메뉴를 찾지 못 했습니다.");
+            if (menu.getName().equals(name)) {
+                return true;
             }
         }
-    }
-
-    public void isInvalidPriceRange(int price) throws MenuPriceIndexOutOfBoundsException {
-        if (price < minPriceValid || price > maxPriceValid) {
-            throw new MenuPriceIndexOutOfBoundsException("가격은 100원 이샹 100,000원 이하 입니다");
-        }
-//  불대수 법칙, 드모르간 법
-
+        return false;
     }
 }

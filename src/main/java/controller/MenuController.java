@@ -36,30 +36,23 @@ public class MenuController {
         return menuRepository.getSales();
     }
 
-    public void showMenuListByUser() throws NotFoundMenuException {
-        ArrayList<Menu> menuList = getMenuList();
-        validator.menuIsEmpty(menuList);
+    public ArrayList<Menu> getMenuList() {
+        ArrayList<Menu> menuList = menuRepository.findAll();
 
-        for (Menu menu : menuList) {
-            System.out.println("메뉴 : " + menu.getName() + ", 가격 : " + menu.getPrice());
-        }
+        return menuList;
     }
 
     public void orderMenuByUser() throws NotFoundNameException {
-        ArrayList<Menu> menuList = getMenuList();
+        ArrayList<Menu> menuList = menuRepository.findAll();
 
         String name = stringScanner.nextLine();
 
-        validator.notfoundName(name, menuList);
+        validator.isFoundName(name, menuList);
 
         menuRepository.oderMenu(name);
     }
 
     public ArrayList<String> getNameList() {
         return menuRepository.findNames();
-    }
-
-    private ArrayList<Menu> getMenuList() {
-        return menuRepository.findAll();
     }
 }

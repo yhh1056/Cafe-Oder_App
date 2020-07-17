@@ -59,7 +59,7 @@ public class View {
                 CustomerMessage.showInvalid();
                 startAdmin();
         }
-        inputCustomer.lineReset();
+//        inputCustomer.lineReset();
     }
 
     private void startUser() {
@@ -74,7 +74,7 @@ public class View {
                 CustomerMessage.showInvalid();
                 startUser();
         }
-        inputCustomer.lineReset();
+//        inputCustomer.lineReset();
     }
 
     private void endApp() {
@@ -83,10 +83,10 @@ public class View {
 
     private void registerMenu() {
         CustomerMessage.showMenuRegister();
-        inputCustomer.lineReset();
+//        inputCustomer.lineReset();
 
-        inputCustomer.getNameList(menuController.getNameList());
-        String name = inputCustomer.getRegisterInputName();
+        inputCustomer.getMenuList(menuController.getMenuList());
+        String name = inputCustomer.getRegisterName();
         int price = inputCustomer.getPrice();
         menuController.addMenu(name, price);
 
@@ -96,22 +96,23 @@ public class View {
     private void deleteMenu() {
         CustomerMessage.showDeleteMenu();
         inputCustomer.lineReset();
-        //메뉴가 없는 경우 추가
-        inputCustomer.getNameList(menuController.getNameList());
+
+        inputCustomer.getMenuList(menuController.getMenuList());
         String name = inputCustomer.getEqualName();
         menuController.delete(name);
         startAdmin();
     }
 
+    private void showSales() {
+        int sales = menuController.getSales();
+        CustomerMessage.showSales(sales);
+        choiceMode();
+    }
+
     private void showMenuList() {
         CustomerMessage.showMenuList();
-        try {
-            menuController.showMenuListByUser();
-            order();
-
-        } catch (NotFoundMenuException e) {
-            System.out.println(e.getMessage());
-        }
+        menuController.getMenuList();
+        order();
     }
 
     private void order() {
@@ -123,11 +124,5 @@ public class View {
             System.out.println(e.getMessage());
             startUser();
         }
-    }
-
-    private void showSales() {
-        int sales = menuController.getSales();
-        CustomerMessage.showSales(sales);
-        choiceMode();
     }
 }
