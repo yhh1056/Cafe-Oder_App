@@ -21,16 +21,23 @@ class ValidatorTest {
     }
 
     @Test
-    void invalidNameLength() {
+    void 유효하지_않은_이름으로_등록() {
         String name = "15글자가 넘는 이름을 주입 합니다.";
 
-        assertThrows(MenuNameIndexOutOfBoundsException.class, () -> {
-            validator.invalidNameLength(name);
-        });
+        assertThrows(NameIndexOutOfBoundsExceptionHandler.class,
+                () -> validator.invalidNameLength(name));
     }
 
     @Test
-    void isExistedMenu() {
+    void 유효하지_않은_가격으로_등록() {
+        int invalidPrice = 1000000;
+
+        assertThrows(PriceIndexOutOfBoundsExceptionHandler.class,
+                () -> validator.invalidPriceRange(invalidPrice));
+    }
+
+    @Test
+    void 메뉴가_이미_존재() {
         Menu coffee = new Menu("coffee", 4000);
         Menu test = new Menu("test", 4000);
 
@@ -43,41 +50,9 @@ class ValidatorTest {
     }
 
     @Test
-    void isEmptyMenu() {
+    void 메뉴가_없을_경우() {
         ArrayList<Menu> menuList = new ArrayList<>();
 
         assertTrue(validator.isEmptyMenu(menuList));
-    }
-
-    @Test
-    void isFoundName() {
-        Menu coffee = new Menu("coffee", 4000);
-        Menu test = new Menu("test", 4000);
-
-        ArrayList<Menu> menuList = new ArrayList<>();
-        menuList.add(coffee);
-        menuList.add(test);
-
-        assertTrue(validator.isFoundName("coffee", menuList));
-    }
-
-    @Test
-    void isNotFoundName() {
-        Menu coffee = new Menu("coffee", 4000);
-        Menu test = new Menu("test", 4000);
-
-        ArrayList<Menu> menuList = new ArrayList<>();
-        menuList.add(coffee);
-        menuList.add(test);
-
-        assertFalse(validator.isFoundName("invalid", menuList));
-    }
-
-    @Test
-    void isInvalidPriceRange() {
-        int invalidPrice = 1000000;
-
-        assertThrows(MenuPriceIndexOutOfBoundsException.class,
-                () -> validator.invalidPriceRange(invalidPrice));
     }
 }

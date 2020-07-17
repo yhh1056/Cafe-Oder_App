@@ -2,10 +2,8 @@ package controller;
 
 import domain.Menu;
 import repository.MenuRepository;
-import utils.*;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * author {yhh1056}
@@ -13,13 +11,9 @@ import java.util.Scanner;
  */
 public class MenuController {
     private MenuRepository menuRepository;
-    private Scanner stringScanner;
-    private Validator validator;
 
     public MenuController() {
         this.menuRepository = new MenuRepository();
-        this.stringScanner = new Scanner(System.in);
-        this.validator = new Validator();
     }
 
     public void addMenu(String name, int price) {
@@ -37,22 +31,10 @@ public class MenuController {
     }
 
     public ArrayList<Menu> getMenuList() {
-        ArrayList<Menu> menuList = menuRepository.findAll();
-
-        return menuList;
+        return menuRepository.findAll();
     }
 
-    public void orderMenuByUser() throws NotFoundNameException {
-        ArrayList<Menu> menuList = menuRepository.findAll();
-
-        String name = stringScanner.nextLine();
-
-        validator.isFoundName(name, menuList);
-
+    public void order(String name) {
         menuRepository.oderMenu(name);
-    }
-
-    public ArrayList<String> getNameList() {
-        return menuRepository.findNames();
     }
 }

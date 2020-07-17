@@ -1,8 +1,8 @@
 package view;
 
 import domain.Menu;
-import utils.MenuNameIndexOutOfBoundsException;
-import utils.MenuPriceIndexOutOfBoundsException;
+import utils.NameIndexOutOfBoundsExceptionHandler;
+import utils.PriceIndexOutOfBoundsExceptionHandler;
 import utils.Validator;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.Scanner;
  * author {yhh1056}
  * Create by {2020/07/15}
  */
-public class InputCustomer {
+public class Input {
     private Scanner scanner;
     private int number;
     private String name;
@@ -21,68 +21,74 @@ public class InputCustomer {
     private Validator validator;
     private ArrayList<Menu> menuList;
 
-    public InputCustomer() {
-        scanner = new Scanner(System.in);
+    public Input() {
+        this.scanner = new Scanner(System.in);
         this.validator = new Validator();
     }
 
     public int getChoiceNumber() {
         try {
             number = scanner.nextInt();
+            lineReset();
             return number;
         } catch (InputMismatchException e) {
-            CustomerMessage.showInvalid();
+            ApplicationErrorMessage.isInvalid();
             lineReset();
             return getChoiceNumber();
         }
     }
 
     public String getRegisterName()  {
-        name = scanner.nextLine();
         try {
+            name = scanner.nextLine();
             validator.invalidNameLength(name);
-            if (validator.isExistedMenu(name, menuList)) {
-                System.out.println("이미 존재하는 메뉴");
-                return getRegisterName();
-            } else
-                return name;
-        } catch (MenuNameIndexOutOfBoundsException e) {
+            return isAlreadyExistedMenu();
+        } catch (NameIndexOutOfBoundsExceptionHandler e) {
             System.out.println(e.getMessage());
             return getRegisterName();
         }
     }
 
-    public String getEqualName() {
-        String name = scanner.nextLine();
+    private String isAlreadyExistedMenu() {
         if (validator.isExistedMenu(name, menuList)) {
-            return name;
+            ApplicationErrorMessage.isExisted();
+            return getRegisterName();
         } else {
-            CustomerMessage.showNotFoundName();
-            return getEqualName();
+            return name;
         }
     }
 
-    public int getPrice() {
+    public int getRegisterPrice() {
         try {
             price = scanner.nextInt();
             validator.invalidPriceRange(price);
             return price;
         } catch (InputMismatchException e) {
-            CustomerMessage.showInvalid();
+            ApplicationErrorMessage.isInvalid();
             lineReset();
-            return getPrice();
-        } catch (MenuPriceIndexOutOfBoundsException e) {
+            return getRegisterPrice();
+        } catch (PriceIndexOutOfBoundsExceptionHandler e) {
             System.out.println(e.getMessage());
             lineReset();
-            return getPrice();
+            return getRegisterPrice();
         }
     }
 
-    public void lineReset() {
-        scanner.nextLine();
+    public String getEqualName() {
+        name = scanner.nextLine();
+        if (validator.isExistedMenu(name, menuList)) {
+            return name;
+        } else {
+            ApplicationErrorMessage.isNotFoundName();
+            return getEqualName();
+        }
     }
 
     public void getMenuList(ArrayList<Menu> menuList) {
         this.menuList = menuList;
+    }
+
+    private void lineReset() {
+        scanner.nextLine();
     }
 }

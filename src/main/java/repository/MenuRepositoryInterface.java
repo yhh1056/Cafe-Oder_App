@@ -18,6 +18,4 @@ public interface MenuRepositoryInterface {
     void deleteMenu(String name);
 
     int getSales();
-
-    ArrayList<String> findNames();
 }
