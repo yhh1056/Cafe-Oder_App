@@ -20,6 +20,7 @@ public class Input {
     private int price;
     private Validator validator;
     private ArrayList<Menu> menuList;
+    private int errorNumber = -9999;
 
     public Input() {
         this.scanner = new Scanner(System.in);
@@ -32,9 +33,8 @@ public class Input {
             lineReset();
             return number;
         } catch (InputMismatchException e) {
-            ApplicationErrorMessage.isInvalid();
             lineReset();
-            return getChoiceNumber();
+            return errorNumber;
         }
     }
 
